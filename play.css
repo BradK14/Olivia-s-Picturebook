@@ -1,16 +1,21 @@
+body{
+    background-color: rgb(223, 255, 223);
+    color: rgb(255, 127, 127);
+}
+
 a{
     text-decoration: none;
 }
 
 .ToTitle{
     margin: 4px;
-    border: 2px solid rgb(0, 0, 255);
+    border: 2px solid rgb(191, 191, 255);
     padding: 4px;
     font-size: 50px;
-    color: rgb(0, 0, 0);
+    color: rgb(191, 191, 255);
     transition: color 0.25s ease-out;
 }
 
 .ToTitle:hover{
-    color: rgb(0, 0, 255);
+    color: rgb(127, 127, 255);
 }
