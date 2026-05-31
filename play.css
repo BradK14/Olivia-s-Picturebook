@@ -1,0 +1,16 @@
+a{
+    text-decoration: none;
+}
+
+.ToTitle{
+    margin: 4px;
+    border: 2px solid rgb(0, 0, 255);
+    padding: 4px;
+    font-size: 50px;
+    color: rgb(0, 0, 0);
+    transition: color 0.25s ease-out;
+}
+
+.ToTitle:hover{
+    color: rgb(0, 0, 255);
+}
