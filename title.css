@@ -1,4 +1,5 @@
 body{
+    font-family: DynaPuff;
     white-space: nowrap;  /* Everything should remain on its given line */
     background-color: rgb(223, 255, 223);
     color: rgb(255, 127, 127);
@@ -18,12 +19,18 @@ div.Link{
     text-align: center;
 }
 
+div.Link a{
+    padding: 2px;
+    border: 2px solid rgb(191, 191, 255);
+}
+
 table{
     margin-left: auto;
     margin-right: auto;
 }
 
 table, td{
+    padding: 2px;
     border: 2px solid rgb(191, 191, 255);
 }
 
