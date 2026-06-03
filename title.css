@@ -1,8 +1,16 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
     font-family: DynaPuff;
     white-space: nowrap;  /* Everything should remain on its given line */
     background-color: rgb(223, 255, 223);
     color: rgb(255, 127, 127);
+    min-height: 100vh;
+    border: 50px solid rgb(255, 127, 127);
+    padding: 0%;
+    margin: 0%;
 }
 
 header{

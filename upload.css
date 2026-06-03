@@ -1,7 +1,15 @@
+*{
+    box-sizing: border-box;
+}
+
 body{
     font-family: DynaPuff;
     background-color: rgb(223, 255, 223);
     color: rgb(255, 127, 127);
+    min-height: 100vh;
+    margin: 0%;
+    padding: 10px;
+    border: 50px solid rgb(255, 127, 127);
 }
 
 a{
@@ -9,7 +17,6 @@ a{
 }
 
 .ToTitle{
-    margin: 4px;
     border: 2px solid rgb(191, 191, 255);
     padding: 4px;
     font-size: 50px;
