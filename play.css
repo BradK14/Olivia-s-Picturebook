@@ -27,3 +27,21 @@ a{
 .ToTitle:hover{
     color: rgb(127, 127, 255);
 }
+
+.BackButtonLocation{
+    position: fixed;
+    top: 70px;
+    left: 70px;
+}
+
+.ImageLocation{
+    justify-self: center;
+}
+
+.InputLocation{
+    color: rgb(191, 191, 255);
+    border: 2px solid rgb(191, 191, 255);
+    position: fixed;
+    bottom: 70px;
+    justify-self: center;
+}
