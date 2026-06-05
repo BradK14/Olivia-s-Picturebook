@@ -9,6 +9,7 @@ body{
     color: rgb(255, 127, 127);
     min-height: 100vh;
     border: 50px solid rgb(255, 127, 127);
+    border-image: url('images/Border.png') 64 round;
     padding: 0%;
     margin: 0%;
 }

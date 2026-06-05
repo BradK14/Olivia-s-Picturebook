@@ -10,6 +10,7 @@ body{
     margin: 0%;
     padding: 10px;
     border: 50px solid rgb(255, 127, 127);
+    border-image: url('images/Border.png') 64 round;
 }
 
 a{
