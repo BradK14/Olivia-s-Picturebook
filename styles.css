@@ -4,29 +4,60 @@
 
 body{
     font-family: DynaPuff;
+    white-space: nowrap;  /* Everything should remain on its given line */
     background-color: rgb(223, 255, 223);
     color: rgb(255, 127, 127);
     min-height: 100vh;
-    margin: 0%;
-    padding: 10px;
     border: 50px solid rgb(255, 127, 127);
     border-image: url('images/Border.png') 64 round;
+    padding: 0%;
+    margin: 0%;
+}
+
+header{
+    font-size: 50px;
+    text-align: center;
+}
+
+h2{
+    font-size: 50px;
+    text-align: center;
+}
+
+div.Link{
+    text-align: center;
+}
+
+div.Link a{
+    padding: 2px;
+    border: 2px solid rgb(191, 191, 255);
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table, td{
+    padding: 2px;
+    border: 2px solid rgb(191, 191, 255);
 }
 
 a{
+    font-size: 40px;
+    color: rgb(191, 191, 255);
     text-decoration: none;
+    transition: color 0.25s ease-out;
+}
+
+a:hover{
+    color: rgb(127, 127, 255);
 }
 
 .ToTitle{
     border: 2px solid rgb(191, 191, 255);
     padding: 4px;
     font-size: 50px;
-    color: rgb(191, 191, 255);
-    transition: color 0.25s ease-out;
-}
-
-.ToTitle:hover{
-    color: rgb(127, 127, 255);
 }
 
 .BackButtonLocation{
@@ -36,6 +67,7 @@ a{
 }
 
 .ImageLocation{
+    padding: 10px;
     justify-self: center;
 }
 
