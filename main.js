@@ -5,29 +5,40 @@ let image;
 let inputButton;
 
 // Replace this with an array of classes called playImages
-const playImages = ['images/PlayImages/Ladybug.png', 'images/PlayImages/Elephant.png'];
+const playImages = [
+    {src: 'images/PlayImages/Ladybug.png',
+    alt: 'Ladybug',
+    width: IMGWIDTH
+    },
+    {src: 'images/PlayImages/Elephant.png',
+    alt: 'Elephant',
+    width: IMGWIDTH
+    }]
 
 function NextImage(){
     image.remove();
-
     image = document.createElement('img');
-    image.src = playImages[Math.floor(Math.random() * playImages.length)]
-    image.alt = 'Image';
-    image.width = IMGWIDTH;
+    
+    imageNum = Math.floor(Math.random() * playImages.length);
+    image.src = playImages[imageNum].src;
+    image.alt = playImages[imageNum].alt;
+    image.width = playImages[imageNum].width;
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 }
 
 function StartGame(){
     image = document.createElement('img');
-    image.src = 'images/PlayImages/Ladybug.png';
-    image.alt = 'Ladybug';
-    image.width = IMGWIDTH;
+
+    imageNum = Math.floor(Math.random() * playImages.length);
+    image.src = playImages[imageNum].src;
+    image.alt = playImages[imageNum].alt;
+    image.width = playImages[imageNum].width;
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 
     startButton.remove();
 
     inputButton = document.createElement('button');
-    inputButton = document.getElementsByClassName("InputLocation")[0].appendChild(inputButton);
+    document.getElementsByClassName("InputLocation")[0].appendChild(inputButton);
     inputButton.textContent = 'Next';
     inputButton.addEventListener("click", NextImage);
 }
