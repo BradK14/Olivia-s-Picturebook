@@ -15,24 +15,48 @@ const playImages = [
     width: IMGWIDTH
     }]
 
-function NextImage(){
-    image.remove();
-    image = document.createElement('img');
+const usedImages = [];
+
+// Cycles through list of images
+function GenerateNextImage(){
+    // Determine a random available image to choose
+    let steps = 1 + Math.floor(Math.random() * (playImages.length - usedImages.length));
     
-    imageNum = Math.floor(Math.random() * playImages.length);
-    image.src = playImages[imageNum].src;
-    image.alt = playImages[imageNum].alt;
-    image.width = playImages[imageNum].width;
+    // Take the random number of steps only through valid available images
+    let index;
+    for (let i = 0; i < playImages.length; i++){
+        if (!usedImages.includes(i)){
+            if (--steps === 0){
+                index = i;
+                break;
+            }
+        }
+    }
+
+    // Invalidate this image for the next use of this function or reset images when all have been run through
+    usedImages.push(index);
+    if (usedImages.length === playImages.length){
+        usedImages.splice(0, usedImages.length);
+        usedImages.push(index);
+    }
+
+    // Set the new image info and return it
+    let playImage = document.createElement('img');
+    playImage.src = playImages[index].src;
+    playImage.alt = playImages[index].alt;
+    playImage.width = playImages[index].width;
+    
+    return playImage;
+}
+
+function GenerateAndSetNextImage(){
+    image.remove();
+    image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 }
 
 function StartGame(){
-    image = document.createElement('img');
-
-    imageNum = Math.floor(Math.random() * playImages.length);
-    image.src = playImages[imageNum].src;
-    image.alt = playImages[imageNum].alt;
-    image.width = playImages[imageNum].width;
+    image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 
     startButton.remove();
@@ -40,7 +64,7 @@ function StartGame(){
     inputButton = document.createElement('button');
     document.getElementsByClassName("InputLocation")[0].appendChild(inputButton);
     inputButton.textContent = 'Next';
-    inputButton.addEventListener("click", NextImage);
+    inputButton.addEventListener("click", GenerateAndSetNextImage);
 }
 
 startButton.addEventListener("click", StartGame);
