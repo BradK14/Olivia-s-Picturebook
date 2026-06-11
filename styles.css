@@ -67,7 +67,11 @@ a:hover{
 }
 
 .ImageLocation{
-    padding: 10px;
+    display: flex;
+    height: 600px;
+    width: 600px;
+    margin: 10px;
+    align-items: center;
     justify-self: center;
 }
 
@@ -77,4 +81,15 @@ a:hover{
     position: fixed;
     bottom: 70px;
     justify-self: center;
+}
+
+button{
+    width: 200px;
+    height: 100px;
+    font-size: 50px;
+}
+
+#startButton{
+    width: 600px;
+    height: 600px;
 }

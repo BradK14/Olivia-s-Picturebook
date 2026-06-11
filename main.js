@@ -1,4 +1,5 @@
 const IMGWIDTH = 600;
+const IMGHEIGHT = 600;
 
 const startButton = document.getElementById("startButton");
 let image;
@@ -8,11 +9,13 @@ let inputButton;
 const playImages = [
     {src: 'images/PlayImages/Ladybug.png',
     alt: 'Ladybug',
-    width: IMGWIDTH
+    width: IMGWIDTH,
+    height: IMGHEIGHT
     },
     {src: 'images/PlayImages/Elephant.png',
     alt: 'Elephant',
-    width: IMGWIDTH
+    width: IMGWIDTH,
+    height: IMGHEIGHT
     }]
 
 const usedImages = [];
@@ -45,6 +48,7 @@ function GenerateNextImage(){
     playImage.src = playImages[index].src;
     playImage.alt = playImages[index].alt;
     playImage.width = playImages[index].width;
+    playImage.height = playImages[index].height;
     
     return playImage;
 }
