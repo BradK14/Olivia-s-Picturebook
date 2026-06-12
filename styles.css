@@ -46,6 +46,7 @@ table, td{
 a{
     font-size: 40px;
     color: rgb(191, 191, 255);
+    background-color: rgb(255, 255, 255);
     text-decoration: none;
     transition: color 0.25s ease-out;
 }
@@ -73,11 +74,11 @@ a:hover{
     margin: 10px;
     align-items: center;
     justify-self: center;
+    border: 4px solid rgb(191, 191, 255);
 }
 
 .InputLocation{
     color: rgb(191, 191, 255);
-    border: 2px solid rgb(191, 191, 255);
     position: fixed;
     bottom: 70px;
     justify-self: center;
@@ -86,10 +87,20 @@ a:hover{
 button{
     width: 200px;
     height: 100px;
+    font-family: DynaPuff;
     font-size: 50px;
+    color: rgb(191, 191, 255);
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(191, 191, 255);
+    transition: color 0.25s ease-out;
+}
+
+button:hover{
+    color: rgb(127, 127, 255);
 }
 
 #startButton{
-    width: 600px;
-    height: 600px;
+    width: 592px;
+    height: 592px;
+    border: none;
 }

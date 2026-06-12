@@ -1,5 +1,5 @@
-const IMGWIDTH = 600;
-const IMGHEIGHT = 600;
+const IMGWIDTH = 592;
+const IMGHEIGHT = 592;
 
 const startButton = document.getElementById("startButton");
 let image;
