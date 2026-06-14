@@ -57,6 +57,7 @@ function GenerateAndSetNextImage(){
     image.remove();
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
+    inputButton.textContent = image.alt;
 }
 
 function StartGame(){
@@ -66,9 +67,18 @@ function StartGame(){
     startButton.remove();
 
     inputButton = document.createElement('button');
+    inputButton.setAttribute('id', 'Correct');
     document.getElementsByClassName("InputLocation")[0].appendChild(inputButton);
-    inputButton.textContent = 'Next';
-    inputButton.addEventListener("click", GenerateAndSetNextImage);
+    inputButton.textContent = image.alt;
+    inputButton.addEventListener("click", CorrectChoiceChosen);
+}
+
+function CorrectChoiceChosen(){
+    inputButton.disabled = true;
+    let timeout = setTimeout(function(){
+        GenerateAndSetNextImage();
+        inputButton.disabled = false;
+    }, 1000);
 }
 
 startButton.addEventListener("click", StartGame);
