@@ -3,10 +3,15 @@ const IMGHEIGHT = 592;
 
 const startButton = document.getElementById("startButton");
 let image;
-let inputButton;
+const inputButtons = [];
 
 // Replace this with an array of classes called playImages
 const playImages = [
+    {src: 'images/PlayImages/Blueberry.png',
+    alt: 'Blueberry',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
     {src: 'images/PlayImages/Ladybug.png',
     alt: 'Ladybug',
     width: IMGWIDTH,
@@ -57,7 +62,7 @@ function GenerateAndSetNextImage(){
     image.remove();
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
-    inputButton.textContent = image.alt;
+    inputButtons[0].textContent = image.alt;
 }
 
 function StartGame(){
@@ -66,18 +71,24 @@ function StartGame(){
 
     startButton.remove();
 
-    inputButton = document.createElement('button');
-    inputButton.setAttribute('id', 'Correct');
-    document.getElementsByClassName("InputLocation")[0].appendChild(inputButton);
-    inputButton.textContent = image.alt;
-    inputButton.addEventListener("click", CorrectChoiceChosen);
+    for (let i = 0; i < 4; i++){
+        inputButtons.push(document.createElement('button'));
+        inputButtons[i].setAttribute('id', 'Incorrect');
+    }
+    inputButtons[0].setAttribute('id', 'Correct');
+    document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
+    document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+    document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
+    document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
+    inputButtons[0].textContent = image.alt;
+    inputButtons[0].addEventListener("click", CorrectChoiceChosen);
 }
 
 function CorrectChoiceChosen(){
-    inputButton.disabled = true;
+    inputButtons[0].disabled = true;
     let timeout = setTimeout(function(){
         GenerateAndSetNextImage();
-        inputButton.disabled = false;
+        inputButtons[0].disabled = false;
     }, 1000);
 }
 
