@@ -4,11 +4,17 @@ const IMGHEIGHT = 592;
 const startButton = document.getElementById("startButton");
 let image;
 const inputButtons = [];
+let difficulty;
 
 // Replace this with an array of classes called playImages
 const playImages = [
     {src: 'images/PlayImages/Blueberry.png',
     alt: 'Blueberry',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/Butterfly.png',
+    alt: 'Butterfly',
     width: IMGWIDTH,
     height: IMGHEIGHT
     },
@@ -19,6 +25,16 @@ const playImages = [
     },
     {src: 'images/PlayImages/Elephant.png',
     alt: 'Elephant',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/Flower.png',
+    alt: 'Flower',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/IceCream.png',
+    alt: 'Ice Cream',
     width: IMGWIDTH,
     height: IMGHEIGHT
     }]
@@ -62,34 +78,68 @@ function GenerateAndSetNextImage(){
     image.remove();
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
-    inputButtons[0].textContent = image.alt;
 }
 
 function StartGame(){
+    // Set difficulty
+    difficulty = "Normal";
+
+    // Set first image
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 
+    // Remove start buttons
     startButton.remove();
 
-    for (let i = 0; i < 4; i++){
+    // Set up inputs
+    if (difficulty === "Normal"){
+        for (let i = 0; i < 4; i++){
         inputButtons.push(document.createElement('button'));
-        inputButtons[i].setAttribute('id', 'Incorrect');
+        inputButtons[i].addEventListener("click", DisableSelf);
+        }
+        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
+        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+        document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
+        document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
     }
-    inputButtons[0].setAttribute('id', 'Correct');
-    document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
-    document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
-    document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
-    document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
-    inputButtons[0].textContent = image.alt;
-    inputButtons[0].addEventListener("click", CorrectChoiceChosen);
+
+    SetChoices();
 }
 
 function CorrectChoiceChosen(){
-    inputButtons[0].disabled = true;
+    DisableInputs(true);
     let timeout = setTimeout(function(){
         GenerateAndSetNextImage();
-        inputButtons[0].disabled = false;
+        SetChoices();
+        DisableInputs(false);
     }, 1000);
+}
+
+function DisableSelf(){
+    this.disabled = true;
+}
+
+function DisableInputs(disable){
+    if (difficulty === "Normal"){
+        for (let i = 0; i < 4; i++){
+        inputButtons[i].disabled = disable;
+        }
+    }
+}
+
+function SetChoices(){
+    if (difficulty === "Normal"){
+        const correctChoice = Math.floor(Math.random() * 4);
+        inputButtons[correctChoice].setAttribute('id', 'Correct');
+        inputButtons[correctChoice].textContent = image.alt;
+        inputButtons[correctChoice].addEventListener("click", CorrectChoiceChosen, {once: true});
+        for (let i = 0; i < 4; i++){
+            if (i !== correctChoice){
+                inputButtons[i].textContent = "Wrong";
+                inputButtons[i].setAttribute('id', 'Incorrect');
+            }
+        }
+    }
 }
 
 startButton.addEventListener("click", StartGame);
