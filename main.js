@@ -43,19 +43,8 @@ const usedImages = [];
 
 // Cycles through list of images
 function GenerateNextImage(){
-    // Determine a random available image to choose
-    let steps = 1 + Math.floor(Math.random() * (playImages.length - usedImages.length));
-    
-    // Take the random number of steps only through valid available images
-    let index;
-    for (let i = 0; i < playImages.length; i++){
-        if (!usedImages.includes(i)){
-            if (--steps === 0){
-                index = i;
-                break;
-            }
-        }
-    }
+    // Choose a random unused image
+    let index = ChooseUnusedImageIndex(usedImages);
 
     // Invalidate this image for the next use of this function or reset images when all have been run through
     usedImages.push(index);
@@ -129,17 +118,49 @@ function DisableInputs(disable){
 
 function SetChoices(){
     if (difficulty === "Normal"){
+        // Keep track of used image names
+        const usedNames = [];
+
+        // Add the current image as a used image name
+        for (let i = 0; i < playImages.length; i++){
+            if (playImages[i].alt === image.alt){
+                usedNames.push(i);
+            }
+        }
+
+        // Choose a location and set the correct choice
         const correctChoice = Math.floor(Math.random() * 4);
         inputButtons[correctChoice].setAttribute('id', 'Correct');
         inputButtons[correctChoice].textContent = image.alt;
         inputButtons[correctChoice].addEventListener("click", CorrectChoiceChosen, {once: true});
+
+        // Set wrong choices with unused image names
         for (let i = 0; i < 4; i++){
             if (i !== correctChoice){
-                inputButtons[i].textContent = "Wrong";
+                let index = ChooseUnusedImageIndex(usedNames);
+                usedNames.push(index);
+                inputButtons[i].textContent = playImages[index].alt;
                 inputButtons[i].setAttribute('id', 'Incorrect');
             }
         }
     }
+}
+
+// Returns the index of a random image in playImages that is not included in a list of given indeces
+function ChooseUnusedImageIndex(usedImgs){
+    // Take the random number of steps only through valid available images
+    let steps = 1 + Math.floor(Math.random() * (playImages.length - usedImgs.length));
+    let index;
+    for (let i = 0; i < playImages.length; i++){
+        if (!usedImgs.includes(i)){
+            if (--steps === 0){
+                index = i;
+                break;
+            }
+        }
+    }
+
+    return index;
 }
 
 startButton.addEventListener("click", StartGame);
