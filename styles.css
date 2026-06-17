@@ -33,16 +33,6 @@ div.Link a{
     border: 2px solid rgb(191, 191, 255);
 }
 
-/* table{
-    margin-left: auto;
-    margin-right: auto;
-}
-
-table, td{
-    padding: 2px;
-    border: 2px solid rgb(191, 191, 255);
-} */
-
 a{
     font-size: 40px;
     color: rgb(191, 191, 255);
@@ -74,6 +64,7 @@ a:hover{
     margin: 10px;
     align-items: center;
     justify-self: center;
+    flex-direction: column;
     border: 4px solid rgb(191, 191, 255);
 }
 
@@ -111,8 +102,8 @@ button:disabled#Incorrect{
     border: 2px solid rgb(223, 95, 95);
 }
 
-#startButton{
+#easyButton, #normalButton, #hardButton{
     width: 592px;
-    height: 592px;
+    height: 197px;
     border: none;
 }

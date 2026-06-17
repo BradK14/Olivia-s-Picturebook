@@ -1,7 +1,9 @@
 const IMGWIDTH = 592;
 const IMGHEIGHT = 592;
 
-const startButton = document.getElementById("startButton");
+const easyButton = document.getElementById("easyButton");
+const normalButton = document.getElementById("normalButton");
+const hardButton = document.getElementById("hardButton");
 let image;
 const inputButtons = [];
 let difficulty;
@@ -70,15 +72,25 @@ function GenerateAndSetNextImage(){
 }
 
 function StartGame(){
-    // Set difficulty
-    difficulty = "Normal";
+    // Set difficulty based on which button was pressed
+    if (this.id === "easyButton"){
+        difficulty = "Easy";
+    }
+    else if (this.id === "normalButton"){
+        difficulty = "Normal";
+    }
+    else {
+        difficulty = "Hard"
+    }
 
     // Set first image
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 
     // Remove start buttons
-    startButton.remove();
+    easyButton.remove();
+    normalButton.remove();
+    hardButton.remove();
 
     // Set up inputs
     if (difficulty === "Normal"){
@@ -163,4 +175,7 @@ function ChooseUnusedImageIndex(usedImgs){
     return index;
 }
 
-startButton.addEventListener("click", StartGame);
+// Set buttons that are already on the screen from the start
+easyButton.addEventListener("click", StartGame);
+normalButton.addEventListener("click", StartGame);
+hardButton.addEventListener("click", StartGame);
