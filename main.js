@@ -93,10 +93,18 @@ function StartGame(){
     hardButton.remove();
 
     // Set up inputs
-    if (difficulty === "Normal"){
+    if (difficulty === "Easy"){
+        for (let i = 0; i < 2; i++){
+            inputButtons.push(document.createElement('button'));
+            inputButtons[i].addEventListener("click", DisableSelf);
+        }
+        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
+        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+    }
+    else if (difficulty === "Normal"){
         for (let i = 0; i < 4; i++){
-        inputButtons.push(document.createElement('button'));
-        inputButtons[i].addEventListener("click", DisableSelf);
+            inputButtons.push(document.createElement('button'));
+            inputButtons[i].addEventListener("click", DisableSelf);
         }
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
         document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
@@ -107,6 +115,7 @@ function StartGame(){
     SetChoices();
 }
 
+// When a play button with the correct choice id is clicked
 function CorrectChoiceChosen(){
     DisableInputs(true);
     let timeout = setTimeout(function(){
@@ -116,44 +125,61 @@ function CorrectChoiceChosen(){
     }, 1000);
 }
 
+// Disables a button after it is clicked
 function DisableSelf(){
     this.disabled = true;
 }
 
+// Disables all play inputs
 function DisableInputs(disable){
-    if (difficulty === "Normal"){
-        for (let i = 0; i < 4; i++){
+    // Determine which inputs to disable based on difficulty
+    let numChoices;
+    if (difficulty === "Easy"){
+        numChoices = 2;
+    }
+    else if (difficulty === "Normal"){
+        numChoices = 4;
+    }
+
+    // Disable inputs
+    for (let i = 0; i < numChoices; i++){
         inputButtons[i].disabled = disable;
-        }
     }
 }
 
 function SetChoices(){
-    if (difficulty === "Normal"){
-        // Keep track of used image names
-        const usedNames = [];
+    // Decide how many values to change depending on difficulty
+    let numChoices;
+    if (difficulty === "Easy"){
+        numChoices = 2;
+    }
+    else if (difficulty === "Normal"){
+        numChoices = 4;
+    }
 
-        // Add the current image as a used image name
-        for (let i = 0; i < playImages.length; i++){
-            if (playImages[i].alt === image.alt){
-                usedNames.push(i);
-            }
+    // Keep track of used image names
+    const usedNames = [];
+
+    // Add the current image as a used image name
+    for (let i = 0; i < playImages.length; i++){
+        if (playImages[i].alt === image.alt){
+            usedNames.push(i);
         }
+    }
 
-        // Choose a location and set the correct choice
-        const correctChoice = Math.floor(Math.random() * 4);
-        inputButtons[correctChoice].setAttribute('id', 'Correct');
-        inputButtons[correctChoice].textContent = image.alt;
-        inputButtons[correctChoice].addEventListener("click", CorrectChoiceChosen, {once: true});
+    // Choose a location and set the correct choice
+    const correctChoice = Math.floor(Math.random() * numChoices);
+    inputButtons[correctChoice].setAttribute('id', 'Correct');
+    inputButtons[correctChoice].textContent = image.alt;
+    inputButtons[correctChoice].addEventListener("click", CorrectChoiceChosen, {once: true});
 
-        // Set wrong choices with unused image names
-        for (let i = 0; i < 4; i++){
-            if (i !== correctChoice){
-                let index = ChooseUnusedImageIndex(usedNames);
-                usedNames.push(index);
-                inputButtons[i].textContent = playImages[index].alt;
-                inputButtons[i].setAttribute('id', 'Incorrect');
-            }
+    // Set wrong choices with unused image names
+    for (let i = 0; i < numChoices; i++){
+        if (i !== correctChoice){
+            let index = ChooseUnusedImageIndex(usedNames);
+            usedNames.push(index);
+            inputButtons[i].textContent = playImages[index].alt;
+            inputButtons[i].setAttribute('id', 'Incorrect');
         }
     }
 }

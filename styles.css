@@ -105,5 +105,8 @@ button:disabled#Incorrect{
 #easyButton, #normalButton, #hardButton{
     width: 592px;
     height: 197px;
-    border: none;
+}
+
+#easyButton{
+    height: 198px;
 }
