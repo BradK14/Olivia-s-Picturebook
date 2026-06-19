@@ -1,6 +1,8 @@
+// Constant image sizes
 const IMGWIDTH = 592;
 const IMGHEIGHT = 592;
 
+// Global variables
 const easyButton = document.getElementById("easyButton");
 const normalButton = document.getElementById("normalButton");
 const hardButton = document.getElementById("hardButton");
@@ -8,7 +10,7 @@ let image;
 const inputButtons = [];
 let difficulty;
 
-// Replace this with an array of classes called playImages
+// Info relating to the images in the image file
 const playImages = [
     {src: 'images/PlayImages/Blueberry.png',
     alt: 'Blueberry',
@@ -111,8 +113,27 @@ function StartGame(){
         document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
         document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
     }
+    else{
+        inputButtons.push(document.createElement('input'));
+        inputButtons.push(document.createElement('button'));
+        inputButtons[1].setAttribute('id', 'Correct');
+        inputButtons[1].addEventListener("click", TryFormEntry);
+        inputButtons[1].textContent = "GO";
+        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
+        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+    }
 
     SetChoices();
+}
+
+// Hard mode button uses the form enty to check for a correct answer
+function TryFormEntry(){
+    if (inputButtons[0].value.toLowerCase() === image.alt.toLowerCase()){
+        CorrectChoiceChosen();
+    }
+    else{
+        // Make the button flash red for a second
+    }
 }
 
 // When a play button with the correct choice id is clicked
@@ -140,6 +161,9 @@ function DisableInputs(disable){
     else if (difficulty === "Normal"){
         numChoices = 4;
     }
+    else{
+        numChoices = 2;
+    }
 
     // Disable inputs
     for (let i = 0; i < numChoices; i++){
@@ -155,6 +179,11 @@ function SetChoices(){
     }
     else if (difficulty === "Normal"){
         numChoices = 4;
+    }
+    else{
+        // Hard difficulty does not change anything else with its inputs
+        inputButtons[0].value = "";
+        return;
     }
 
     // Keep track of used image names
