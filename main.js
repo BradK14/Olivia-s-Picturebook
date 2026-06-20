@@ -121,18 +121,35 @@ function StartGame(){
         inputButtons[1].textContent = "GO";
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
         document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+
+        // Focus in the input section upon starting hard mode
+        inputButtons[0].focus();
+
+        // Make the enter key activate the GO button
+        document.addEventListener('keydown', EnterKey);
     }
 
     SetChoices();
 }
 
+function EnterKey(event){
+    if (event.key === 'Enter' && !inputButtons[1].disabled){
+        TryFormEntry();
+    }
+}
+
 // Hard mode button uses the form enty to check for a correct answer
 function TryFormEntry(){
+    if (inputButtons[1].classList.contains('flashRed')){
+        inputButtons[1].classList.remove('flashRed');
+        void inputButtons[1].offsetWidth;
+    }
     if (inputButtons[0].value.toLowerCase() === image.alt.toLowerCase()){
         CorrectChoiceChosen();
     }
     else{
         // Make the button flash red for a second
+        inputButtons[1].classList.add('flashRed');
     }
 }
 
@@ -168,6 +185,11 @@ function DisableInputs(disable){
     // Disable inputs
     for (let i = 0; i < numChoices; i++){
         inputButtons[i].disabled = disable;
+    }
+
+    // When in hard mode, focus on the input field after enabling it
+    if (difficulty === "Hard" && !disable){
+        inputButtons[0].focus();
     }
 }
 
