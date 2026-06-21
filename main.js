@@ -1,14 +1,20 @@
+// Global variables
 // Constant image sizes
 const IMGWIDTH = 592;
 const IMGHEIGHT = 592;
 
-// Global variables
+// Things that are needed to be kept track of
 const easyButton = document.getElementById("easyButton");
 const normalButton = document.getElementById("normalButton");
 const hardButton = document.getElementById("hardButton");
 let image;
 const inputButtons = [];
 let difficulty;
+
+// Restart button set up behind the scenes
+const restartButton = document.createElement('button');
+restartButton.textContent = "Restart";
+restartButton.addEventListener('click', RestartButton);
 
 // Info relating to the images in the image file
 const playImages = [
@@ -43,8 +49,10 @@ const playImages = [
     height: IMGHEIGHT
     }]
 
+// A list of indeces for images that have recently been used
 const usedImages = [];
 
+// Functions
 // Cycles through list of images
 function GenerateNextImage(){
     // Choose a random unused image
@@ -74,6 +82,9 @@ function GenerateAndSetNextImage(){
 }
 
 function StartGame(){
+    // Append the restart button to the screen
+    document.getElementsByClassName("BackButtonLocation")[0].appendChild(restartButton);
+
     // Set difficulty based on which button was pressed
     if (this.id === "easyButton"){
         difficulty = "Easy";
@@ -82,7 +93,7 @@ function StartGame(){
         difficulty = "Normal";
     }
     else {
-        difficulty = "Hard"
+        difficulty = "Hard";
     }
 
     // Set first image
@@ -130,6 +141,28 @@ function StartGame(){
     }
 
     SetChoices();
+}
+
+// Resets everything to the way it was at the start
+function RestartButton(){
+    // Reset images and used images
+    image.remove();
+    usedImages.splice(0, usedImages.length);
+
+    // Place difficulty buttons back in
+    document.getElementsByClassName("ImageLocation")[0].appendChild(easyButton);
+    document.getElementsByClassName("ImageLocation")[0].appendChild(normalButton);
+    document.getElementsByClassName("ImageLocation")[0].appendChild(hardButton);
+
+    // Remove inputs
+    for (let inp of inputButtons){
+        inp.remove();
+        inp = null;
+    }
+    inputButtons.splice(0, inputButtons.length)
+
+    // Remove self when done
+    restartButton.remove();
 }
 
 function EnterKey(event){

@@ -34,10 +34,12 @@ div.Link a{
 }
 
 a{
+    margin: 4px;
     font-size: 40px;
     color: rgb(191, 191, 255);
     background-color: rgb(255, 255, 255);
     text-decoration: none;
+    text-align: center;
     transition: color 0.25s ease-out;
 }
 
@@ -55,6 +57,8 @@ a:hover{
     position: fixed;
     top: 70px;
     left: 70px;
+    display: flex;
+    flex-direction: column;
 }
 
 .ImageLocation{
