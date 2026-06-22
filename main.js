@@ -79,6 +79,9 @@ function GenerateAndSetNextImage(){
     image.remove();
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
+
+    // Animate its arrival
+    image.classList.add('arrive');
 }
 
 function StartGame(){
@@ -99,6 +102,7 @@ function StartGame(){
     // Set first image
     image = GenerateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
+    image.classList.add('arrive');
 
     // Remove start buttons
     easyButton.remove();

@@ -144,3 +144,12 @@ input:disabled{
     100% { color: rgb(191, 191, 255);
     border-color: rgb(191, 191, 255);}
 }
+
+img.arrive{
+    animation: arrive 0.5s linear;
+}
+
+@keyframes arrive{
+    0% { opacity: 0%; }
+    100% { opacity: 100%; }
+}
