@@ -153,3 +153,13 @@ img.arrive{
     0% { opacity: 0%; }
     100% { opacity: 100%; }
 }
+
+img.depart{
+    animation: depart 0.5s ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes depart{
+    0% { opacity: 100%; }
+    100% { opacity: 0%; }
+}

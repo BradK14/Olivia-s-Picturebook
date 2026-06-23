@@ -193,11 +193,12 @@ function TryFormEntry(){
 // When a play button with the correct choice id is clicked
 function CorrectChoiceChosen(){
     DisableInputs(true);
+    image.classList.add('depart');
     let timeout = setTimeout(function(){
         GenerateAndSetNextImage();
         SetChoices();
         DisableInputs(false);
-    }, 1000);
+    }, 500);
 }
 
 // Disables a button after it is clicked
