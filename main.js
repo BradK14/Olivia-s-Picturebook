@@ -193,12 +193,23 @@ function TryFormEntry(){
 // When a play button with the correct choice id is clicked
 function CorrectChoiceChosen(){
     DisableInputs(true);
+    RandomizeDepartAnimationVariables();
     image.classList.add('depart');
     let timeout = setTimeout(function(){
         GenerateAndSetNextImage();
         SetChoices();
         DisableInputs(false);
     }, 500);
+}
+
+function RandomizeDepartAnimationVariables(){
+    const selector = document.querySelectorAll('img');
+    for (let elem of selector){
+        const randDeg = Math.floor(Math.random() * 71) + 20 + 'deg';
+        const randPx = Math.floor(Math.random() * 651) + 250 + 'px';
+        elem.style.setProperty('--randDeg', randDeg);
+        elem.style.setProperty('--randPx', randPx);
+    }
 }
 
 // Disables a button after it is clicked
