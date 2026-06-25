@@ -28,8 +28,13 @@ const playImages = [
     width: IMGWIDTH,
     height: IMGHEIGHT
     },
-    {src: 'images/PlayImages/Ladybug.png',
-    alt: 'Ladybug',
+    {src: 'images/PlayImages/Cat.png',
+    alt: 'Cat',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/Dog.png',
+    alt: 'Dog',
     width: IMGWIDTH,
     height: IMGHEIGHT
     },
@@ -45,6 +50,21 @@ const playImages = [
     },
     {src: 'images/PlayImages/IceCream.png',
     alt: 'Ice Cream',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/Ladybug.png',
+    alt: 'Ladybug',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/Spider.png',
+    alt: 'Spider',
+    width: IMGWIDTH,
+    height: IMGHEIGHT
+    },
+    {src: 'images/PlayImages/Strawberry.png',
+    alt: 'Strawberry',
     width: IMGWIDTH,
     height: IMGHEIGHT
     }]
