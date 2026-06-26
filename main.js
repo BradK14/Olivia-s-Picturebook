@@ -1,5 +1,6 @@
 // Global variables
-// Constant image sizes
+// This file borrows the playImages variable from the playImages file, and will not work properly without it included
+// playImages
 const IMGWIDTH = 592;
 const IMGHEIGHT = 592;
 
@@ -15,59 +16,6 @@ let difficulty;
 const restartButton = document.createElement('button');
 restartButton.textContent = "Restart";
 restartButton.addEventListener('click', RestartButton);
-
-// Info relating to the images in the image file
-const playImages = [
-    {src: 'images/PlayImages/Blueberry.png',
-    alt: 'Blueberry',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Butterfly.png',
-    alt: 'Butterfly',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Cat.png',
-    alt: 'Cat',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Dog.png',
-    alt: 'Dog',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Elephant.png',
-    alt: 'Elephant',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Flower.png',
-    alt: 'Flower',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/IceCream.png',
-    alt: 'Ice Cream',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Ladybug.png',
-    alt: 'Ladybug',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Spider.png',
-    alt: 'Spider',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    },
-    {src: 'images/PlayImages/Strawberry.png',
-    alt: 'Strawberry',
-    width: IMGWIDTH,
-    height: IMGHEIGHT
-    }]
 
 // A list of indeces for images that have recently been used
 const usedImages = [];
@@ -89,8 +37,8 @@ function GenerateNextImage(){
     let playImage = document.createElement('img');
     playImage.src = playImages[index].src;
     playImage.alt = playImages[index].alt;
-    playImage.width = playImages[index].width;
-    playImage.height = playImages[index].height;
+    playImage.width = IMGWIDTH;
+    playImage.height = IMGHEIGHT;
     
     return playImage;
 }
