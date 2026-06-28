@@ -15,10 +15,13 @@ setInterval(() => {
     image.alt = playImage.alt;
     image.width = IMG_WIDTH;
     image.height = IMG_HEIGHT;
+    image.classList.add('backgroundImage');
+    const randPx = Math.floor(Math.random() * (window.innerWidth - IMG_WIDTH)) + 'px';
+    image.style.setProperty('--randPx', randPx);
 
     // Set image, animate it, then remove it after a period of time
     document.body.appendChild(image);
-    setInterval(() => {
+    setTimeout(() => {
         image.remove();
         image = null;
     }, 1000);

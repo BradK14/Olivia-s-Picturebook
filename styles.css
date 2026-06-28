@@ -180,7 +180,13 @@ img.depart{
         transform: translateX(0) rotate(0deg);
     }
     100% { opacity: 0%;
-        /* transform: translateX(400px) rotate(45deg); */
         transform: translateX(var(--randPx)) rotate(var(--randDeg));
     }
+}
+
+img.backgroundImage{
+    position: fixed;
+    z-index: -1;
+    top: 0px;
+    left: var(--randPx);
 }
