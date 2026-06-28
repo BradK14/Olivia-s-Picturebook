@@ -1,30 +1,39 @@
 // Global variables
 // This file borrows the playImages variable from the playImages file, and will not work properly without it included
 // playImages
-const IMGWIDTH = 592;
-const IMGHEIGHT = 592;
 
-// Things that are needed to be kept track of
-const easyButton = document.getElementById("easyButton");
-const normalButton = document.getElementById("normalButton");
-const hardButton = document.getElementById("hardButton");
+// Image dimensions
+const IMG_WIDTH = 592;
+const IMG_HEIGHT = IMG_WIDTH;
+
+// Set up for difficulty buttons
+const difficultyButtons = document.getElementById("difficultyButtons");
+document.getElementById("easyButton").addEventListener("click", startGame);
+document.getElementById("normalButton").addEventListener("click", startGame);
+document.getElementById("hardButton").addEventListener("click", startGame);
+
+// This holds the current shown image
 let image;
+
+// This keeps track of the various input buttons, it will have different elements based on difficulty chosen
 const inputButtons = [];
+
+// The currently chosen difficulty
 let difficulty;
 
 // Restart button set up behind the scenes
 const restartButton = document.createElement('button');
 restartButton.textContent = "Restart";
-restartButton.addEventListener('click', RestartButton);
+restartButton.addEventListener('click', onRestart);
 
 // A list of indeces for images that have recently been used
 const usedImages = [];
 
 // Functions
 // Cycles through list of images
-function GenerateNextImage(){
+function generateNextImage(){
     // Choose a random unused image
-    let index = ChooseUnusedImageIndex(usedImages);
+    let index = chooseUnusedImageIndex(usedImages);
 
     // Invalidate this image for the next use of this function or reset images when all have been run through
     usedImages.push(index);
@@ -37,22 +46,24 @@ function GenerateNextImage(){
     let playImage = document.createElement('img');
     playImage.src = playImages[index].src;
     playImage.alt = playImages[index].alt;
-    playImage.width = IMGWIDTH;
-    playImage.height = IMGHEIGHT;
+    playImage.width = IMG_WIDTH;
+    playImage.height = IMG_HEIGHT;
     
     return playImage;
 }
 
-function GenerateAndSetNextImage(){
+// Removes current image and replaces it with a new image
+function generateAndSetNextImage(){
     image.remove();
-    image = GenerateNextImage();
+    image = generateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
 
     // Animate its arrival
     image.classList.add('arrive');
 }
 
-function StartGame(){
+// Run this function when clicking a difficulty button
+function startGame(){
     // Append the restart button to the screen
     document.getElementsByClassName("BackButtonLocation")[0].appendChild(restartButton);
 
@@ -68,20 +79,18 @@ function StartGame(){
     }
 
     // Set first image
-    image = GenerateNextImage();
+    image = generateNextImage();
     document.getElementsByClassName("ImageLocation")[0].appendChild(image);
     image.classList.add('arrive');
 
     // Remove start buttons
-    easyButton.remove();
-    normalButton.remove();
-    hardButton.remove();
+    difficultyButtons.remove();
 
     // Set up inputs
     if (difficulty === "Easy"){
         for (let i = 0; i < 2; i++){
             inputButtons.push(document.createElement('button'));
-            inputButtons[i].addEventListener("click", DisableSelf);
+            inputButtons[i].addEventListener("click", disableSelf);
         }
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
         document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
@@ -89,7 +98,7 @@ function StartGame(){
     else if (difficulty === "Normal"){
         for (let i = 0; i < 4; i++){
             inputButtons.push(document.createElement('button'));
-            inputButtons[i].addEventListener("click", DisableSelf);
+            inputButtons[i].addEventListener("click", disableSelf);
         }
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
         document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
@@ -100,7 +109,7 @@ function StartGame(){
         inputButtons.push(document.createElement('input'));
         inputButtons.push(document.createElement('button'));
         inputButtons[1].setAttribute('id', 'Correct');
-        inputButtons[1].addEventListener("click", TryFormEntry);
+        inputButtons[1].addEventListener("click", tryFormEntry);
         inputButtons[1].textContent = "GO";
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
         document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
@@ -109,22 +118,20 @@ function StartGame(){
         inputButtons[0].focus();
 
         // Make the enter key activate the GO button
-        document.addEventListener('keydown', EnterKey);
+        document.addEventListener('keydown', onKeyDown);
     }
 
-    SetChoices();
+    setChoices();
 }
 
 // Resets everything to the way it was at the start
-function RestartButton(){
+function onRestart(){
     // Reset images and used images
     image.remove();
     usedImages.splice(0, usedImages.length);
 
     // Place difficulty buttons back in
-    document.getElementsByClassName("ImageLocation")[0].appendChild(easyButton);
-    document.getElementsByClassName("ImageLocation")[0].appendChild(normalButton);
-    document.getElementsByClassName("ImageLocation")[0].appendChild(hardButton);
+    document.getElementsByClassName("ImageLocation")[0].appendChild(difficultyButtons);
 
     // Remove inputs
     for (let inp of inputButtons){
@@ -137,20 +144,22 @@ function RestartButton(){
     restartButton.remove();
 }
 
-function EnterKey(event){
+// Input detection for hard difficulty
+function onKeyDown(event){
+    // Enter key attempts to test for a correct answer
     if (event.key === 'Enter' && !inputButtons[1].disabled){
-        TryFormEntry();
+        tryFormEntry();
     }
 }
 
 // Hard mode button uses the form enty to check for a correct answer
-function TryFormEntry(){
+function tryFormEntry(){
     if (inputButtons[1].classList.contains('flashRed')){
         inputButtons[1].classList.remove('flashRed');
         void inputButtons[1].offsetWidth;
     }
     if (inputButtons[0].value.toLowerCase() === image.alt.toLowerCase()){
-        CorrectChoiceChosen();
+        correctChoiceChosen();
     }
     else{
         // Make the button flash red for a second
@@ -159,18 +168,19 @@ function TryFormEntry(){
 }
 
 // When a play button with the correct choice id is clicked
-function CorrectChoiceChosen(){
-    DisableInputs(true);
-    RandomizeDepartAnimationVariables();
+function correctChoiceChosen(){
+    disableInputs(true);
+    randomizeDepartAnimationVariables();
     image.classList.add('depart');
     let timeout = setTimeout(function(){
-        GenerateAndSetNextImage();
-        SetChoices();
-        DisableInputs(false);
+        generateAndSetNextImage();
+        setChoices();
+        disableInputs(false);
     }, 500);
 }
 
-function RandomizeDepartAnimationVariables(){
+// Image depart animation has variables that are to be randomized before the animation plays
+function randomizeDepartAnimationVariables(){
     const selector = document.querySelectorAll('img');
     for (let elem of selector){
         const randDeg = Math.floor(Math.random() * 71) + 20 + 'deg';
@@ -181,12 +191,12 @@ function RandomizeDepartAnimationVariables(){
 }
 
 // Disables a button after it is clicked
-function DisableSelf(){
+function disableSelf(){
     this.disabled = true;
 }
 
 // Disables all play inputs
-function DisableInputs(disable){
+function disableInputs(disable){
     // Determine which inputs to disable based on difficulty
     let numChoices;
     if (difficulty === "Easy"){
@@ -210,7 +220,8 @@ function DisableInputs(disable){
     }
 }
 
-function SetChoices(){
+// Resets the input choices
+function setChoices(){
     // Decide how many values to change depending on difficulty
     let numChoices;
     if (difficulty === "Easy"){
@@ -239,12 +250,12 @@ function SetChoices(){
     const correctChoice = Math.floor(Math.random() * numChoices);
     inputButtons[correctChoice].setAttribute('id', 'Correct');
     inputButtons[correctChoice].textContent = image.alt;
-    inputButtons[correctChoice].addEventListener("click", CorrectChoiceChosen, {once: true});
+    inputButtons[correctChoice].addEventListener("click", correctChoiceChosen, {once: true});
 
     // Set wrong choices with unused image names
     for (let i = 0; i < numChoices; i++){
         if (i !== correctChoice){
-            let index = ChooseUnusedImageIndex(usedNames);
+            let index = chooseUnusedImageIndex(usedNames);
             usedNames.push(index);
             inputButtons[i].textContent = playImages[index].alt;
             inputButtons[i].setAttribute('id', 'Incorrect');
@@ -253,7 +264,7 @@ function SetChoices(){
 }
 
 // Returns the index of a random image in playImages that is not included in a list of given indeces
-function ChooseUnusedImageIndex(usedImgs){
+function chooseUnusedImageIndex(usedImgs){
     // Take the random number of steps only through valid available images
     let steps = 1 + Math.floor(Math.random() * (playImages.length - usedImgs.length));
     let index;
@@ -268,8 +279,3 @@ function ChooseUnusedImageIndex(usedImgs){
 
     return index;
 }
-
-// Set buttons that are already on the screen from the start
-easyButton.addEventListener("click", StartGame);
-normalButton.addEventListener("click", StartGame);
-hardButton.addEventListener("click", StartGame);

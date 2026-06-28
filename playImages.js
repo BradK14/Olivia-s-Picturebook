@@ -1,3 +1,4 @@
+// playImages contain info on the images that are needed throughout this program
 const playImages = [
     {src: 'images/PlayImages/Blueberry.png',
     alt: 'Blueberry',

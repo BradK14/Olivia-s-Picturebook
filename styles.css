@@ -74,6 +74,11 @@ a:hover{
     background-color: rgb(255, 255, 255);
 }
 
+.ImageLocation div{
+    display: flex;
+    flex-direction: column;
+}
+
 .InputLocation{
     color: rgb(191, 191, 255);
     position: fixed;
