@@ -187,6 +187,13 @@ img.depart{
 img.backgroundImage{
     position: fixed;
     z-index: -1;
-    top: 0px;
+    bottom: 100%;
     left: var(--randPx);
+    animation: backgroundImageFall 5s ease-in;
+    animation-fill-mode: forwards;
+}
+
+@keyframes backgroundImageFall{
+    0% { transform: translateY(0); }
+    100% { transform: translateY(75vw); }
 }

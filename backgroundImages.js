@@ -24,5 +24,5 @@ setInterval(() => {
     setTimeout(() => {
         image.remove();
         image = null;
-    }, 1000);
+    }, 5000);
 }, 1000);
