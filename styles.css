@@ -194,6 +194,12 @@ img.backgroundImage{
 }
 
 @keyframes backgroundImageFall{
-    0% { transform: translateY(0); }
-    100% { transform: translateY(75vw); }
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 50%;
+    }
+    100% {
+        transform: translateY(75vw) rotate(var(--randDeg));
+        opacity: 0%;
+    }
 }

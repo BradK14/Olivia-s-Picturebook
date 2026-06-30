@@ -16,8 +16,22 @@ setInterval(() => {
     image.width = IMG_WIDTH;
     image.height = IMG_HEIGHT;
     image.classList.add('backgroundImage');
-    const randPx = Math.floor(Math.random() * (window.innerWidth - IMG_WIDTH)) + 'px';
+
+    // Randomize its horizontal position at the top of the screen
+    const randPx = Math.floor(Math.random() * (window.innerWidth - IMG_WIDTH + 1)) + 'px';
     image.style.setProperty('--randPx', randPx);
+
+    // Randomize how much it will rotate, and in which direction
+    const isNegTrue = Math.floor(Math.random() * 2);
+    let randNeg;
+    if (isNegTrue){
+        randNeg = -1;
+    }
+    else{
+        randNeg = 1;
+    }
+    const randDeg = (Math.floor(Math.random() * (360 * 3 + 1)) * randNeg) + 'deg';
+    image.style.setProperty('--randDeg', randDeg);
 
     // Set image, animate it, then remove it after a period of time
     document.body.appendChild(image);
