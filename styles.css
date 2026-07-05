@@ -159,6 +159,8 @@ input:disabled{
 img{
     --randPx: 400px;
     --randDeg: 45deg;
+    --posX: 0px;
+    --posY: 0px;
 }
 
 img.arrive{
@@ -196,11 +198,14 @@ img.backgroundImage{
     left: var(--randPx);
     animation: backgroundImageFall 5s ease-in;
     animation-fill-mode: forwards;
+    -webkit-user-drag: none;
 }
 
 img.backgroundImgClicked{
     animation: none;
     opacity: 100%;
+    top: var(--posY);
+    left: var(--posX);
 }
 
 @keyframes backgroundImageFall{

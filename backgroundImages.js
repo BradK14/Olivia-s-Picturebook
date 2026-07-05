@@ -17,7 +17,7 @@ function startGeneratingBackgroundImageLoop(){
         image.width = IMG_WIDTH;
         image.height = IMG_HEIGHT;
         image.classList.add('backgroundImage');
-        image.addEventListener('click', onBackgroundImageClick);
+        image.addEventListener('mousedown', onBackgroundImageClick);
 
         // Randomize its horizontal position at the top of the screen
         const randPx = Math.floor(Math.random() * (window.innerWidth - IMG_WIDTH + 1)) + 'px';
@@ -45,8 +45,11 @@ function startGeneratingBackgroundImageLoop(){
 }
 
 // 
-function onBackgroundImageClick(){
+function onBackgroundImageClick(event){
+    this.style.setProperty('--posX', event.clientX - IMG_WIDTH / 2 + 'px');
+    this.style.setProperty('--posY', event.clientY - IMG_HEIGHT / 2 + 'px');
     this.classList.add('backgroundImgClicked');
+    this.removeEventListener('mousedown', onBackgroundImageClick);
 }
 
 // Begin the background image loop
