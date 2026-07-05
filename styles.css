@@ -3,6 +3,7 @@
 }
 
 body{
+    pointer-events: none;
     overflow-x: clip;
     font-family: DynaPuff;
     white-space: nowrap;  /* Everything should remain on its given line */
@@ -35,6 +36,7 @@ div.Link a{
 }
 
 a{
+    pointer-events: auto;
     margin: 4px;
     font-size: 40px;
     color: rgb(191, 191, 255);
@@ -87,6 +89,7 @@ a:hover{
 }
 
 button{
+    pointer-events: auto;
     width: 350px;
     height: 90px;
     font-family: DynaPuff;
@@ -123,6 +126,7 @@ button:disabled#Incorrect{
 }
 
 input{
+    pointer-events: auto;
     width: 350px;
     height: 90px;
     color: rgb(191, 191, 255);
@@ -187,10 +191,16 @@ img.depart{
 img.backgroundImage{
     position: fixed;
     z-index: -1;
+    pointer-events: visible;
     bottom: 100%;
     left: var(--randPx);
     animation: backgroundImageFall 5s ease-in;
     animation-fill-mode: forwards;
+}
+
+img.backgroundImgClicked{
+    animation: none;
+    opacity: 100%;
 }
 
 @keyframes backgroundImageFall{
