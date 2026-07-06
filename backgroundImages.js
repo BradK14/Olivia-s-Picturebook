@@ -21,7 +21,8 @@ function startGeneratingBackgroundImageLoop(){
 
         // Randomize its horizontal position at the top of the screen
         const randPx = Math.floor(Math.random() * (window.innerWidth - IMG_WIDTH + 1)) + 'px';
-        image.style.setProperty('--randPx', randPx);
+        image.style.setProperty('--posX', randPx);
+        image.style.setProperty('--fallDestinationY', IMG_HEIGHT + screen.height + 'px');
 
         // Randomize how much it will rotate, and in which direction
         const isNegTrue = Math.floor(Math.random() * 2);
@@ -37,17 +38,17 @@ function startGeneratingBackgroundImageLoop(){
 
         // Set image, animate it, then remove it after a period of time
         document.body.appendChild(image);
-        setTimeout(() => {
+        image.addEventListener('animationend', () => {
             image.remove();
             image = null;
-        }, 5000);
+        });
     }, 1000);
 }
 
-// 
-function onBackgroundImageClick(event){
-    this.style.setProperty('--posX', event.clientX - IMG_WIDTH / 2 + 'px');
-    this.style.setProperty('--posY', event.clientY - IMG_HEIGHT / 2 + 'px');
+// Activate an animation when clicking on a background image
+function onBackgroundImageClick(){
+    const rect = this.getBoundingClientRect();
+    this.style.setProperty('--posY', rect.top + (rect.bottom - rect.top) / 2 - IMG_HEIGHT / 2 + 'px');
     this.classList.add('backgroundImgClicked');
     this.removeEventListener('mousedown', onBackgroundImageClick);
 }

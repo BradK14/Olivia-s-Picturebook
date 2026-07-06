@@ -161,6 +161,7 @@ img{
     --randDeg: 45deg;
     --posX: 0px;
     --posY: 0px;
+    --fallDestinationY: 0px;
 }
 
 img.arrive{
@@ -195,7 +196,7 @@ img.backgroundImage{
     z-index: -1;
     pointer-events: visible;
     bottom: 100%;
-    left: var(--randPx);
+    left: var(--posX);
     animation: backgroundImageFall 5s ease-in;
     animation-fill-mode: forwards;
     -webkit-user-drag: none;
@@ -205,7 +206,7 @@ img.backgroundImgClicked{
     animation: none;
     opacity: 100%;
     top: var(--posY);
-    left: var(--posX);
+    animation: backgroundImageDisplay 1s ease-out;
 }
 
 @keyframes backgroundImageFall{
@@ -214,7 +215,12 @@ img.backgroundImgClicked{
         opacity: 50%;
     }
     100% {
-        transform: translateY(75vw) rotate(var(--randDeg));
+        transform: translateY(var(--fallDestinationY)) rotate(var(--randDeg));
         opacity: 0%;
     }
+}
+
+@keyframes backgroundImageDisplay{
+    0% {}
+    100% {}
 }
