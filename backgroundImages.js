@@ -6,9 +6,22 @@
 const IMG_WIDTH = 300;
 const IMG_HEIGHT = IMG_WIDTH;
 
+// Begin the background image loop
+let backgroundImageLoopInterval = startGeneratingBackgroundImageLoop();
+
+// Check if the page is open
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden'){
+        clearInterval(backgroundImageLoopInterval);
+    }
+    else{
+        backgroundImageLoopInterval = startGeneratingBackgroundImageLoop();
+    }
+});
+
 // Generate images over time
 function startGeneratingBackgroundImageLoop(){
-    setInterval(() => {
+    const interval = setInterval(() => {
         // Create new image
         let playImage = playImages[Math.floor(Math.random() * playImages.length)];
         let image = document.createElement('img');
@@ -43,6 +56,8 @@ function startGeneratingBackgroundImageLoop(){
             image = null;
         });
     }, 1000);
+
+    return interval;
 }
 
 // Activate an animation when clicking on a background image
@@ -52,6 +67,3 @@ function onBackgroundImageClick(){
     this.classList.add('backgroundImgClicked');
     this.removeEventListener('mousedown', onBackgroundImageClick);
 }
-
-// Begin the background image loop
-startGeneratingBackgroundImageLoop();
