@@ -63,7 +63,27 @@ function startGeneratingBackgroundImageLoop(){
 // Activate an animation when clicking on a background image
 function onBackgroundImageClick(){
     const rect = this.getBoundingClientRect();
-    this.style.setProperty('--posY', rect.top + (rect.bottom - rect.top) / 2 - IMG_HEIGHT / 2 + 'px');
+    const imgCenter = rect.top + (rect.bottom - rect.top) / 2;
+    this.style.setProperty('--posY', imgCenter - IMG_HEIGHT / 2 + 'px');
     this.classList.add('backgroundImgClicked');
     this.removeEventListener('mousedown', onBackgroundImageClick);
+
+    let x = Number(this.style.getPropertyValue('--posX').slice(0, -2));
+    x += IMG_WIDTH / 2;
+    displayBackgroundImageTextAnimation(this.alt, x, imgCenter);
+}
+
+// Create and display text to accompany a background image
+function displayBackgroundImageTextAnimation(text, x, y){
+    let imgName = document.createElement('p');
+    imgName.classList.add('backgroundImgText');
+    imgName.textContent = text;
+    imgName.style.setProperty('--posX', x + 'px');
+    imgName.style.setProperty('--posY', y + 'px');
+
+    document.body.appendChild(imgName);
+    imgName.addEventListener('animationend', () => {
+        imgName.remove();
+        imgName = null;
+    });
 }
