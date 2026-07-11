@@ -14,6 +14,7 @@ body{
     border-image: url('images/Border.png') 64 round;
     padding: 0%;
     margin: 0%;
+    user-select: none;
 }
 
 header{
@@ -204,6 +205,8 @@ img.backgroundImage{
 
 img.backgroundImgClicked{
     animation: none;
+    z-index: 1;
+    pointer-events: none;
     opacity: 100%;
     top: var(--posY);
     animation: backgroundImageDisplay 1s ease-out;
@@ -221,6 +224,12 @@ img.backgroundImgClicked{
 }
 
 @keyframes backgroundImageDisplay{
-    0% {}
-    100% {}
+    0% {
+        transform: scale(1);
+        opacity: 100%;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0%;
+    }
 }
