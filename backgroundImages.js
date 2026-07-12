@@ -68,9 +68,19 @@ function onBackgroundImageClick(){
     this.classList.add('backgroundImgClicked');
     this.removeEventListener('mousedown', onBackgroundImageClick);
 
+    // Set up positioning for and create text to accompany this animation
     let x = Number(this.style.getPropertyValue('--posX').slice(0, -2));
     x += IMG_WIDTH / 2;
-    displayBackgroundImageTextAnimation(this.alt, x, imgCenter);
+
+    let y = imgCenter;
+    if (y >= window.innerHeight){
+        y -= IMG_HEIGHT / 2;
+    }
+    else if (y <= 0){
+        y += IMG_HEIGHT / 2;
+    }
+
+    displayBackgroundImageTextAnimation(this.alt, x, y);
 }
 
 // Create and display text to accompany a background image

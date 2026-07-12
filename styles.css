@@ -225,7 +225,9 @@ p.backgroundImgText{
     text-align: center;
     top: var(--posY);
     left: var(--posX);
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
+    color: rgb(255, 255, 255);
+    -webkit-text-stroke: 1px rgb(0, 0, 0);
     animation: backgroundImgTextDisplay 1s ease-out;
 }
 
