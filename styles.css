@@ -89,6 +89,19 @@ a:hover{
     flex-direction: column;
 }
 
+.PhotoAlbumLocation{
+    pointer-events: auto;
+    display: flex;
+    height: 775px;
+    width: 1000px;
+    margin: 10px;
+    justify-self: center;
+    flex-direction: row;
+    overflow: auto;
+    border: 4px solid rgb(191, 191, 255);
+    background-color: rgb(255, 255, 255);
+}
+
 .InputLocation{
     color: rgb(191, 191, 255);
     position: fixed;
