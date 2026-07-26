@@ -26,11 +26,39 @@ function createAlbumPhoto(playImage){
     return div;
 }
 
+function createUploadAlbumPhoto(){
+    // Create the div to contain everything
+    const div = document.createElement('div');
+    div.classList.add('AlbumPhoto');
+
+    // Create the image
+    const image = document.createElement('img');
+    image.src = 'images/Upload.png';
+    image.alt = 'Upload';
+    image.width = IMG_WIDTH;
+    image.height = IMG_HEIGHT;
+
+    // Create the paragraph to give the image's name
+    const p = document.createElement('p');
+    p.textContent = image.alt;
+
+    // Put the image and paragraph into the div
+    div.appendChild(image);
+    div.appendChild(p);
+
+    // Return the div
+    return div;
+}
+
 // Function to fill the photo album section with all current play images
 function fillPhotoAlbumWithPlayImages(){
+    const photoAlbumLocation = document.querySelector('.PhotoAlbumLocation');
     playImages.forEach((playImage) => {
-        document.getElementsByClassName('PhotoAlbumLocation')[0].appendChild(createAlbumPhoto(playImage));
+        // document.getElementsByClassName('PhotoAlbumLocation')[0].appendChild(createAlbumPhoto(playImage));
+        photoAlbumLocation.appendChild(createAlbumPhoto(playImage));
     });
+
+    photoAlbumLocation.appendChild(createUploadAlbumPhoto());
 }
 
 fillPhotoAlbumWithPlayImages();
