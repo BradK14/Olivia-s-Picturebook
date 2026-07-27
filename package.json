@@ -1,0 +1,23 @@
+{
+  "name": "olivia's-picturebook",
+  "version": "1.0.0",
+  "description": "A game for children learning to associate words with pictures shown on screen.  Similar to flash cards.",
+  "main": "backgroundImages.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BradK14/Olivia-s-Picturebook.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BradK14/Olivia-s-Picturebook/issues"
+  },
+  "homepage": "https://github.com/BradK14/Olivia-s-Picturebook#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
