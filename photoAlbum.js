@@ -38,12 +38,17 @@ function createUploadAlbumPhoto(){
     image.width = IMG_WIDTH;
     image.height = IMG_HEIGHT;
 
+    // Create a link to house the image
+    const link = document.createElement('a');
+    link.href = 'upload.html';
+    link.appendChild(image);
+
     // Create the paragraph to give the image's name
     const p = document.createElement('p');
     p.textContent = image.alt;
 
-    // Put the image and paragraph into the div
-    div.appendChild(image);
+    // Put the link (that holds the image) and paragraph into the div
+    div.appendChild(link);
     div.appendChild(p);
 
     // Return the div
@@ -53,8 +58,7 @@ function createUploadAlbumPhoto(){
 // Function to fill the photo album section with all current play images
 function fillPhotoAlbumWithPlayImages(){
     const photoAlbumLocation = document.querySelector('.PhotoAlbumLocation');
-    playImages.forEach((playImage) => {
-        // document.getElementsByClassName('PhotoAlbumLocation')[0].appendChild(createAlbumPhoto(playImage));
+    playImages.forEach((playImage) => {;
         photoAlbumLocation.appendChild(createAlbumPhoto(playImage));
     });
 
