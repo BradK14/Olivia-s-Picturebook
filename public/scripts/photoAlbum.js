@@ -33,14 +33,14 @@ function createUploadAlbumPhoto(){
 
     // Create the image
     const image = document.createElement('img');
-    image.src = 'images/Upload.png';
+    image.src = '/images/Upload.png';
     image.alt = 'Upload';
     image.width = IMG_WIDTH;
     image.height = IMG_HEIGHT;
 
     // Create a link to house the image
     const link = document.createElement('a');
-    link.href = 'upload.html';
+    link.href = "/Olivia's_Picturebook/upload";
     link.appendChild(image);
 
     // Create the paragraph to give the image's name
