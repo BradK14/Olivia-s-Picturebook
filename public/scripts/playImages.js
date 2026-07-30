@@ -1,32 +1,32 @@
 // playImages contain info on the images that are needed throughout this program
 const playImages = [
     {src: '/images/PlayImages/Blueberry.png',
-    alt: 'Blueberry',
+    alt: 'Blueberry'
     },
     {src: '/images/PlayImages/Butterfly.png',
-    alt: 'Butterfly',
+    alt: 'Butterfly'
     },
     {src: '/images/PlayImages/Cat.png',
-    alt: 'Cat',
+    alt: 'Cat'
     },
     {src: '/images/PlayImages/Dog.png',
-    alt: 'Dog',
+    alt: 'Dog'
     },
     {src: '/images/PlayImages/Elephant.png',
-    alt: 'Elephant',
+    alt: 'Elephant'
     },
     {src: '/images/PlayImages/Flower.png',
-    alt: 'Flower',
+    alt: 'Flower'
     },
     {src: '/images/PlayImages/IceCream.png',
-    alt: 'Ice Cream',
+    alt: 'Ice Cream'
     },
     {src: '/images/PlayImages/Ladybug.png',
-    alt: 'Ladybug',
+    alt: 'Ladybug'
     },
     {src: '/images/PlayImages/Spider.png',
-    alt: 'Spider',
+    alt: 'Spider'
     },
     {src: '/images/PlayImages/Strawberry.png',
-    alt: 'Strawberry',
+    alt: 'Strawberry'
     }];

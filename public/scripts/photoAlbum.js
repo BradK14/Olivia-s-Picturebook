@@ -14,12 +14,17 @@ function createAlbumPhoto(playImage){
     image.width = IMG_WIDTH;
     image.height = IMG_HEIGHT;
 
+    // Create a link to house the image
+    const link = document.createElement('a');
+    link.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
+    link.appendChild(image);
+
     // Create the paragraph to give the image's name
     const p = document.createElement('p');
     p.textContent = image.alt;
 
-    // Put the image and paragraph into the div
-    div.appendChild(image);
+    // Put the link (that holds the image) and paragraph into the div
+    div.appendChild(link);
     div.appendChild(p);
 
     // Return the div
