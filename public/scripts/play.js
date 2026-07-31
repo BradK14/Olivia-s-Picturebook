@@ -15,6 +15,9 @@ document.getElementById("hardButton").addEventListener("click", startGame);
 // This holds the current shown image
 let image;
 
+// This timeout is for generating the next image after a delay.  It must be cancelled early when restarting the game
+let nextImageTimeout;
+
 // This keeps track of the various input buttons, it will have different elements based on difficulty chosen
 const inputButtons = [];
 
@@ -130,6 +133,12 @@ function onRestart(){
     image.remove();
     usedImages.splice(0, usedImages.length);
 
+    // If resetting mid image change, it causes another image to generate outside of the game.  So clear the timeout manually.
+    if (nextImageTimeout){
+        clearTimeout(nextImageTimeout);
+        disableInputs(false);
+    }
+
     // Place difficulty buttons back in
     document.getElementsByClassName("ImageLocation")[0].appendChild(difficultyButtons);
 
@@ -172,7 +181,7 @@ function correctChoiceChosen(){
     disableInputs(true);
     randomizeDepartAnimationVariables();
     image.classList.add('depart');
-    let timeout = setTimeout(function(){
+    nextImageTimeout = setTimeout(function(){
         generateAndSetNextImage();
         setChoices();
         disableInputs(false);
