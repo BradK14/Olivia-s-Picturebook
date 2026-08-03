@@ -8,7 +8,7 @@ const IMG_HEIGHT = IMG_WIDTH;
 
 const imageLocation = document.querySelector('.ImageLocation');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
-
+const saveButton = document.querySelector('#SaveButton');
 
 let uploadImage;
 
@@ -38,6 +38,16 @@ function setUpUploadPage(){
 
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
+
+    // Set up save button
+    saveButton.addEventListener('click', saveUploadInfo);
+}
+
+async function saveUploadInfo(){
+    const res = await fetch("/Olivia's_Picturebook/upload/save");
+    console.log(res);
+    const jsonMessage = await res.json();
+    console.log(jsonMessage);
 }
 
 setUpUploadPage();

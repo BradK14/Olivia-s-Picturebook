@@ -111,6 +111,7 @@ function startGame(){
     else{
         inputButtons.push(document.createElement('input'));
         inputButtons.push(document.createElement('button'));
+        inputButtons[0].spellcheck = 'false';
         inputButtons[1].setAttribute('id', 'Correct');
         inputButtons[1].addEventListener("click", tryFormEntry);
         inputButtons[1].textContent = "GO";

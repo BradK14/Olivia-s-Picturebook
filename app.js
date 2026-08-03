@@ -2,6 +2,8 @@ const path = require('node:path');
 const express = require('express');
 const app = express();
 const rootDir = path.dirname(__filename);
+const savePath = path.join(rootDir, 'data', 'saveData.json');
+const { promises: fs } = require('node:fs');
 
 app.set('view engine', 'ejs');
 
@@ -36,4 +38,9 @@ app.get("/Olivia's_Picturebook/upload", (request, response) => {
     }
 
     return response.sendFile(path.join(rootDir, "views", "upload.ejs"));
+});
+
+app.get("/Olivia's_Picturebook/upload/save", (request, response) => {
+    console.log('Save attempted');
+    return response.json({message: 'it worked'});
 });

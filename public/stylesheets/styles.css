@@ -153,6 +153,10 @@ button:disabled#Incorrect{
     height: 198px;
 }
 
+::spelling-error{
+    text-decoration: none;
+}
+
 input{
     pointer-events: auto;
     width: 350px;
