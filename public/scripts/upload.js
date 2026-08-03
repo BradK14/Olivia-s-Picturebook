@@ -7,7 +7,8 @@ const IMG_WIDTH = 592;
 const IMG_HEIGHT = IMG_WIDTH;
 
 const imageLocation = document.querySelector('.ImageLocation');
-const inputLocation = document.querySelector('.InputLocation');
+const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
+
 
 let uploadImage;
 
@@ -36,9 +37,7 @@ function setUpUploadPage(){
     imageLocation.appendChild(image);
 
     // Create and set text title at the bottom of the page
-    const par = document.createElement('p');
-    par.textContent = image.alt;
-    inputLocation.appendChild(par);
+    imageNameInput.value = image.alt;
 }
 
 setUpUploadPage();
