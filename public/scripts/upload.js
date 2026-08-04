@@ -44,8 +44,11 @@ function setUpUploadPage(){
 }
 
 async function saveUploadInfo(){
-    const res = await fetch("/Olivia's_Picturebook/upload/save");
-    console.log(res);
+    const res = await fetch("/Olivia's_Picturebook/upload/save", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({message: 'Save test'})
+        });
     const jsonMessage = await res.json();
     console.log(jsonMessage);
 }
