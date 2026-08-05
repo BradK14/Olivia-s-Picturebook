@@ -29,4 +29,14 @@ const playImages = [
     },
     {src: '/images/PlayImages/Strawberry.png',
     alt: 'Strawberry'
-    }];
+    }
+];
+
+async function getSaveData(){
+    const response = await fetch("/Olivia's_Picturebook/save");
+    const { playImages } = await response.json();
+    console.log(playImages);
+    return playImages;
+}
+
+getSaveData();

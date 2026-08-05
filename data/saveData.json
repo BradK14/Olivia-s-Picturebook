@@ -1,0 +1,12 @@
+{
+    "playImages": [
+        {
+            "src": "/images/PlayImages/Blueberry.png",
+            "alt": "Blueberry"
+        },
+        {
+            "src": "/images/PlayImages/Butterfly.png",
+            "alt": "Butterfly"
+        }
+    ]
+}

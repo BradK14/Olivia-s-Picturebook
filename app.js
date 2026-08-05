@@ -45,3 +45,8 @@ app.post("/Olivia's_Picturebook/upload/save", (request, response) => {
     console.log(request.body);
     return response.json({message: 'Save not yet implemented'});
 });
+
+app.get("/Olivia's_Picturebook/save", async (request, response) => {
+    const imageJson = await fs.readFile(savePath);
+    return response.json(JSON.parse(imageJson));
+});
