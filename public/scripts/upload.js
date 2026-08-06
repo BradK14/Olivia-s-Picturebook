@@ -12,7 +12,10 @@ const saveButton = document.querySelector('#SaveButton');
 
 let uploadImage;
 
-function setUpUploadPage(){
+async function setUpUploadPage(){
+    // First retrieve the list of play images
+    await getPlayImages();
+
     // Find the existing image from the url query in the playImage database if there is one
     for (let playImage of playImages){
         if (window.uploadImage.toLowerCase() === playImage.alt.toLowerCase()){
@@ -53,4 +56,5 @@ async function saveUploadInfo(){
     console.log(jsonMessage);
 }
 
+// Run the set up of the page
 setUpUploadPage();

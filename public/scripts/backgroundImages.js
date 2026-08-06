@@ -6,18 +6,16 @@
 const IMG_WIDTH = 300;
 const IMG_HEIGHT = IMG_WIDTH;
 
-// Begin the background image loop
-let backgroundImageLoopInterval = startGeneratingBackgroundImageLoop();
+let backgroundImageLoopInterval;
 
-// Check if the page is open
-document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden'){
-        clearInterval(backgroundImageLoopInterval);
-    }
-    else{
-        backgroundImageLoopInterval = startGeneratingBackgroundImageLoop();
-    }
-});
+// Functions
+// This runs the file, first awaiting initialization of playImages from saved file
+async function runBackgroundImages(){
+    // Initialize the play images
+    await getPlayImages();
+    // Begin the background image loop
+    backgroundImageLoopInterval = startGeneratingBackgroundImageLoop();
+}
 
 // Generate images over time
 function startGeneratingBackgroundImageLoop(){
@@ -97,3 +95,16 @@ function displayBackgroundImageTextAnimation(text, x, y){
         imgName = null;
     });
 }
+
+// Check if the page is open
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden'){
+        clearInterval(backgroundImageLoopInterval);
+    }
+    else{
+        backgroundImageLoopInterval = startGeneratingBackgroundImageLoop();
+    }
+});
+
+// This begins all the processes defined above
+runBackgroundImages();

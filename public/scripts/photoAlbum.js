@@ -1,5 +1,19 @@
+// This file holds functionality for the photo album page
+// This file relies on the playImages variable from the playImages file
+
+// Global variables
 IMG_WIDTH = 200;
 IMG_HEIGHT = IMG_WIDTH;
+
+// Functions
+// Function to initialize the page
+async function initializePhotoAlbum(){
+    // Initialize the playImages
+    await getPlayImages();
+
+    // Fill the photo album with the retrieved saved images
+    fillPhotoAlbumWithPlayImages();
+}
 
 // Using a play image from the global array playImages, set up and return an Album Photo
 function createAlbumPhoto(playImage){
@@ -70,4 +84,5 @@ function fillPhotoAlbumWithPlayImages(){
     photoAlbumLocation.appendChild(createUploadAlbumPhoto());
 }
 
-fillPhotoAlbumWithPlayImages();
+// Run the above code and fill the photo album
+initializePhotoAlbum();

@@ -1,42 +1,9 @@
-// playImages contain info on the images that are needed throughout this program
-const playImages = [
-    {src: '/images/PlayImages/Blueberry.png',
-    alt: 'Blueberry'
-    },
-    {src: '/images/PlayImages/Butterfly.png',
-    alt: 'Butterfly'
-    },
-    {src: '/images/PlayImages/Cat.png',
-    alt: 'Cat'
-    },
-    {src: '/images/PlayImages/Dog.png',
-    alt: 'Dog'
-    },
-    {src: '/images/PlayImages/Elephant.png',
-    alt: 'Elephant'
-    },
-    {src: '/images/PlayImages/Flower.png',
-    alt: 'Flower'
-    },
-    {src: '/images/PlayImages/IceCream.png',
-    alt: 'Ice Cream'
-    },
-    {src: '/images/PlayImages/Ladybug.png',
-    alt: 'Ladybug'
-    },
-    {src: '/images/PlayImages/Spider.png',
-    alt: 'Spider'
-    },
-    {src: '/images/PlayImages/Strawberry.png',
-    alt: 'Strawberry'
-    }
-];
+// playImages.js holds a critical variable that is used throughout this project and must be initialized by the file using it with the code below
+let playImages;
 
-async function getSaveData(){
+// Await this function at the start of other js files that require playImages
+async function getPlayImages(){
     const response = await fetch("/Olivia's_Picturebook/save");
-    const { playImages } = await response.json();
-    console.log(playImages);
-    return playImages;
+    const { playImages: pi } = await response.json();
+    playImages = pi;
 }
-
-getSaveData();

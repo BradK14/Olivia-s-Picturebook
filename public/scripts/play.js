@@ -8,9 +8,6 @@ const IMG_HEIGHT = IMG_WIDTH;
 
 // Set up for difficulty buttons
 const difficultyButtons = document.getElementById("difficultyButtons");
-document.getElementById("easyButton").addEventListener("click", startGame);
-document.getElementById("normalButton").addEventListener("click", startGame);
-document.getElementById("hardButton").addEventListener("click", startGame);
 
 // This holds the current shown image
 let image;
@@ -33,6 +30,17 @@ restartButton.addEventListener('click', onRestart);
 const usedImages = [];
 
 // Functions
+// Initial set up for the page, required before using anything on it
+async function setUpPlay(){
+    // First get the play images
+    await getPlayImages();
+
+    // Then attach the functions to the difficulty buttons
+    document.getElementById("easyButton").addEventListener("click", startGame);
+    document.getElementById("normalButton").addEventListener("click", startGame);
+    document.getElementById("hardButton").addEventListener("click", startGame);
+}
+
 // Cycles through list of images
 function generateNextImage(){
     // Choose a random unused image
@@ -289,3 +297,6 @@ function chooseUnusedImageIndex(usedImgs){
 
     return index;
 }
+
+// Run the initialization to enable use of this page
+setUpPlay();
