@@ -2,10 +2,6 @@
 // This file borrows the playImages variable from the playImages file, and will not work properly without it included
 // playImages
 
-// Image dimensions
-const IMG_WIDTH = 592;
-const IMG_HEIGHT = IMG_WIDTH;
-
 // Set up for difficulty buttons
 const difficultyButtons = document.getElementById("difficultyButtons");
 
@@ -57,8 +53,6 @@ function generateNextImage(){
     let playImage = document.createElement('img');
     playImage.src = playImages[index].src;
     playImage.alt = playImages[index].alt;
-    playImage.width = IMG_WIDTH;
-    playImage.height = IMG_HEIGHT;
     
     return playImage;
 }

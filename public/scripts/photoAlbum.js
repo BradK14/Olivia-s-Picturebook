@@ -1,10 +1,6 @@
 // This file holds functionality for the photo album page
 // This file relies on the playImages variable from the playImages file
 
-// Global variables
-IMG_WIDTH = 200;
-IMG_HEIGHT = IMG_WIDTH;
-
 // Functions
 // Function to initialize the page
 async function initializePhotoAlbum(){
@@ -25,8 +21,6 @@ function createAlbumPhoto(playImage){
     const image = document.createElement('img');
     image.src = playImage.src;
     image.alt = playImage.alt;
-    image.width = IMG_WIDTH;
-    image.height = IMG_HEIGHT;
 
     // Create a link to house the image
     const link = document.createElement('a');
@@ -54,8 +48,6 @@ function createUploadAlbumPhoto(){
     const image = document.createElement('img');
     image.src = '/images/Upload.png';
     image.alt = 'Upload';
-    image.width = IMG_WIDTH;
-    image.height = IMG_HEIGHT;
 
     // Create a link to house the image
     const link = document.createElement('a');

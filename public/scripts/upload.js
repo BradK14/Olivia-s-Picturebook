@@ -2,10 +2,6 @@
 // This file borrows the playImages variable from the playImages file, and will not work properly without it included
 // playImages
 
-// Image dimensions
-const IMG_WIDTH = 592;
-const IMG_HEIGHT = IMG_WIDTH;
-
 const imageLocation = document.querySelector('.ImageLocation');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
 const saveButton = document.querySelector('#SaveButton');
@@ -35,8 +31,6 @@ async function setUpUploadPage(){
     const image = document.createElement('img');
     image.src = uploadImage.src;
     image.alt = uploadImage.alt;
-    image.width = IMG_WIDTH;
-    image.height = IMG_HEIGHT;
     imageLocation.appendChild(image);
 
     // Create and set text title at the bottom of the page
