@@ -3,8 +3,7 @@
 // playImages
 
 // Image dimensions
-const IMG_WIDTH = 300;
-const IMG_HEIGHT = IMG_WIDTH;
+const IMG_WIDTH = 15;  // This is taken directly from the styles file, if it is changed there it must be changed here too
 
 let backgroundImageLoopInterval;
 
@@ -25,15 +24,12 @@ function startGeneratingBackgroundImageLoop(){
         let image = document.createElement('img');
         image.src = playImage.src;
         image.alt = playImage.alt;
-        image.width = IMG_WIDTH;
-        image.height = IMG_HEIGHT;
         image.classList.add('backgroundImage');
         image.addEventListener('mousedown', onBackgroundImageClick);
 
         // Randomize its horizontal position at the top of the screen
-        const randPx = Math.floor(Math.random() * (window.innerWidth - IMG_WIDTH + 1)) + 'px';
+        const randPx = Math.floor(Math.random() * (100 - IMG_WIDTH + 1)) + 'vw';
         image.style.setProperty('--posX', randPx);
-        image.style.setProperty('--fallDestinationY', IMG_HEIGHT + screen.height + 'px');
 
         // Randomize how much it will rotate, and in which direction
         const isNegTrue = Math.floor(Math.random() * 2);
@@ -62,20 +58,24 @@ function startGeneratingBackgroundImageLoop(){
 function onBackgroundImageClick(){
     const rect = this.getBoundingClientRect();
     const imgCenter = rect.top + (rect.bottom - rect.top) / 2;
-    this.style.setProperty('--posY', imgCenter - IMG_HEIGHT / 2 + 'px');
+    // this.style.setProperty('--posY', imgCenter - IMG_HEIGHT / 2 + 'px');
+    this.style.setProperty('--posY', imgCenter - this.offsetHeight / 2 + 'px');
     this.classList.add('backgroundImgClicked');
     this.removeEventListener('mousedown', onBackgroundImageClick);
 
     // Set up positioning for and create text to accompany this animation
     let x = Number(this.style.getPropertyValue('--posX').slice(0, -2));
-    x += IMG_WIDTH / 2;
+    // x += IMG_WIDTH / 2;
+    x += this.offsetWidth / 2;
 
     let y = imgCenter;
     if (y >= window.innerHeight){
-        y -= IMG_HEIGHT / 2;
+        // y -= IMG_HEIGHT / 2;
+        y -= this.offsetHeight / 2;
     }
     else if (y <= 0){
-        y += IMG_HEIGHT / 2;
+        // y += IMG_HEIGHT / 2;
+        y += this.offsetHeight / 2;
     }
 
     displayBackgroundImageTextAnimation(this.alt, x, y);

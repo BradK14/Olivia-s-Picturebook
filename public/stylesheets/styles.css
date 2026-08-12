@@ -214,7 +214,7 @@ img{
     --randDeg: 45deg;
     --posX: 0px;
     --posY: 0px;
-    --fallDestinationY: 0px;
+    --fallDestinationY: 0vh;
 }
 
 p{
@@ -258,6 +258,9 @@ img.backgroundImage{
     animation: backgroundImageFall 5s ease-in;
     animation-fill-mode: forwards;
     -webkit-user-drag: none;
+    width: 15vw;  /* If this is changed the corresponding constant in backgroundImages needs to be changed with it */
+    height: 15vw;
+    --fallDestinationY: calc(100vh + 15vw);
 }
 
 img.backgroundImgClicked{
