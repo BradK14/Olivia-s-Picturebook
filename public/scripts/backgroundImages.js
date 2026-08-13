@@ -57,24 +57,19 @@ function startGeneratingBackgroundImageLoop(){
 // Activate an animation when clicking on a background image
 function onBackgroundImageClick(){
     const rect = this.getBoundingClientRect();
-    const imgCenter = rect.top + (rect.bottom - rect.top) / 2;
-    // this.style.setProperty('--posY', imgCenter - IMG_HEIGHT / 2 + 'px');
-    this.style.setProperty('--posY', imgCenter - this.offsetHeight / 2 + 'px');
+    const imgCenterY = rect.top + (rect.bottom - rect.top) / 2;
+    const imgCenterX = rect.left + (rect.right - rect.left) / 2;
+    this.style.setProperty('--posY', (imgCenterY - this.offsetHeight / 2) / window.innerHeight * 100 + 'vh');
     this.classList.add('backgroundImgClicked');
     this.removeEventListener('mousedown', onBackgroundImageClick);
 
     // Set up positioning for and create text to accompany this animation
-    let x = Number(this.style.getPropertyValue('--posX').slice(0, -2));
-    // x += IMG_WIDTH / 2;
-    x += this.offsetWidth / 2;
-
-    let y = imgCenter;
+    let x = imgCenterX;
+    let y = imgCenterY;
     if (y >= window.innerHeight){
-        // y -= IMG_HEIGHT / 2;
         y -= this.offsetHeight / 2;
     }
     else if (y <= 0){
-        // y += IMG_HEIGHT / 2;
         y += this.offsetHeight / 2;
     }
 
@@ -86,8 +81,8 @@ function displayBackgroundImageTextAnimation(text, x, y){
     let imgName = document.createElement('p');
     imgName.classList.add('backgroundImgText');
     imgName.textContent = text;
-    imgName.style.setProperty('--posX', x + 'px');
-    imgName.style.setProperty('--posY', y + 'px');
+    imgName.style.setProperty('--posX', x / window.innerWidth * 100 + 'vw');
+    imgName.style.setProperty('--posY', y / window.innerHeight * 100 + 'vh');
 
     document.body.appendChild(imgName);
     imgName.addEventListener('animationend', () => {
