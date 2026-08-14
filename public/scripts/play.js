@@ -196,9 +196,9 @@ function randomizeDepartAnimationVariables(){
     const selector = document.querySelectorAll('img');
     for (let elem of selector){
         const randDeg = Math.floor(Math.random() * 71) + 20 + 'deg';
-        const randPx = Math.floor(Math.random() * 651) + 250 + 'px';
+        const randDist = Math.floor(Math.random() * 31) + 20 + 'vw';
         elem.style.setProperty('--randDeg', randDeg);
-        elem.style.setProperty('--randPx', randPx);
+        elem.style.setProperty('--randDist', randDist);
     }
 }
 

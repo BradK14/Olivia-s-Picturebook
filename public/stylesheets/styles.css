@@ -86,11 +86,6 @@ a:hover{
     background-color: rgb(255, 255, 255);
 }
 
-.ImageLocation div{
-    display: flex;
-    flex-direction: column;
-}
-
 .ImageLocation img{
     height: 100%;
     width: 100%;
@@ -98,6 +93,9 @@ a:hover{
 }
 
 #difficultyButtons{
+    background-color: rgb(191, 191, 255);  /* Matches the border color of image location and buttons to fix one pixel gap errors */
+    display: flex;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -210,16 +208,16 @@ input:disabled{
 }
 
 img{
-    --randPx: 400px;
+    --randDist: 35vw;
     --randDeg: 45deg;
-    --posX: 0px;
-    --posY: 0px;
+    --posX: 0;
+    --posY: 0;
     --fallDestinationY: 0vh;
 }
 
 p{
-    --posX: 0px;
-    --posY: 0px;
+    --posX: 0;
+    --posY: 0;
 }
 
 img.arrive{
@@ -228,7 +226,7 @@ img.arrive{
 
 @keyframes arrive{
     0% { opacity: 0%;
-        transform: translateX(-200px);
+        transform: translateX(-10vw);
     }
     100% { opacity: 100%;
         transform: translateX(0);
@@ -245,7 +243,7 @@ img.depart{
         transform: translateX(0) rotate(0deg);
     }
     100% { opacity: 0%;
-        transform: translateX(var(--randPx)) rotate(var(--randDeg));
+        transform: translateX(var(--randDist)) rotate(var(--randDeg));
     }
 }
 
@@ -275,7 +273,7 @@ img.backgroundImgClicked{
 p.backgroundImgText{
     position: fixed;
     z-index: 2;
-    font-size: 40px;
+    font-size: 2vw;
     pointer-events: none;
     text-align: center;
     top: var(--posY);
@@ -310,11 +308,11 @@ p.backgroundImgText{
 
 @keyframes backgroundImgTextDisplay{
     0% {
-        font-size: 40px;
+        font-size: 2vw;
         opacity: 100%;
     }
     100% {
-        font-size: 60px;
+        font-size: 4vw;
         opacity: 0%;
     }
 }

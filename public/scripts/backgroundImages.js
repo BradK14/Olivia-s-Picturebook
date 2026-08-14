@@ -28,8 +28,8 @@ function startGeneratingBackgroundImageLoop(){
         image.addEventListener('mousedown', onBackgroundImageClick);
 
         // Randomize its horizontal position at the top of the screen
-        const randPx = Math.floor(Math.random() * (100 - IMG_WIDTH + 1)) + 'vw';
-        image.style.setProperty('--posX', randPx);
+        const randPos = Math.floor(Math.random() * (100 - IMG_WIDTH + 1)) + 'vw';
+        image.style.setProperty('--posX', randPos);
 
         // Randomize how much it will rotate, and in which direction
         const isNegTrue = Math.floor(Math.random() * 2);
