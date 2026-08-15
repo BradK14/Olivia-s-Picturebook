@@ -1,3 +1,4 @@
+/* Default Mobile Styles */
 *{
     box-sizing: border-box;
 }
@@ -6,7 +7,6 @@ body{
     pointer-events: none;
     overflow-x: clip;
     font-family: DynaPuff;
-    white-space: nowrap;  /* Everything should remain on its given line */
     background-color: rgb(223, 255, 223);
     color: rgb(255, 127, 127);
     min-height: 100vh;
@@ -26,7 +26,7 @@ main{
 }
 
 header{
-    font-size: 3vw;
+    font-size: 6vw;
     text-align: center;
 }
 
@@ -314,5 +314,16 @@ p.backgroundImgText{
     100% {
         font-size: 4vw;
         opacity: 0%;
+    }
+}
+
+/* Desktop Styles*/
+@media (min-width: 768px){
+    body{
+        white-space: nowrap;  /* Everything should remain on its given line */
+    }
+
+    header{
+    font-size: 3vw;
     }
 }

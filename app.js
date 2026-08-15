@@ -10,7 +10,7 @@ app.set('view engine', 'ejs');
 app.use(express.static(path.join(rootDir, "public")));
 app.use(express.json());
 
-app.listen(3000, () => {
+app.listen(3000, '0.0.0.0', () => {
     console.log(`http://localhost:3000/Olivia's_Picturebook`);
 });
 
