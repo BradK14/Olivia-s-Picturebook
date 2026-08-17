@@ -4,6 +4,7 @@
 
 // Image dimensions
 const IMG_WIDTH = 15;  // This is taken directly from the styles file, if it is changed there it must be changed here too
+const IMG_WIDTH_MOBILE = 30;  // This is also from the styles file, used when the screen height is greater than width
 
 let backgroundImageLoopInterval;
 
@@ -27,8 +28,14 @@ function startGeneratingBackgroundImageLoop(){
         image.classList.add('backgroundImage');
         image.addEventListener('mousedown', onBackgroundImageClick);
 
-        // Randomize its horizontal position at the top of the screen
-        const randPos = Math.floor(Math.random() * (100 - IMG_WIDTH + 1)) + 'vw';
+        // Randomize its horizontal position at the top of the screen.  Dependent on aspect ratio of the screen
+        let randPos;
+        if (screen.width < screen.height){
+            randPos = Math.floor(Math.random() * (100 - IMG_WIDTH_MOBILE + 1)) + 'vw';
+        }
+        else{
+            randPos = Math.floor(Math.random() * (100 - IMG_WIDTH + 1)) + 'vw';
+        }
         image.style.setProperty('--posX', randPos);
 
         // Randomize how much it will rotate, and in which direction

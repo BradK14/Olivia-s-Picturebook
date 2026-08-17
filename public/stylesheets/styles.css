@@ -11,7 +11,7 @@ body{
     background-color: rgb(223, 255, 223);
     color: rgb(255, 127, 127);
     min-height: 100vh;
-    border: 2.5vw solid rgb(255, 127, 127);
+    border: 5vw solid rgb(255, 127, 127);
     border-image: url('../images/Border.png') 64 round;
     padding: 0%;
     margin: 0%;
@@ -211,7 +211,6 @@ img{
     --randDeg: 45deg;
     --posX: 0;
     --posY: 0;
-    --fallDestinationY: 0vh;
 }
 
 p{
@@ -255,9 +254,8 @@ img.backgroundImage{
     animation: backgroundImageFall 5s ease-in;
     animation-fill-mode: forwards;
     -webkit-user-drag: none;
-    width: 15vw;  /* If this is changed the corresponding constant in backgroundImages needs to be changed with it */
-    height: 15vw;
-    --fallDestinationY: calc(100vh + 15vw);
+    width: 30vw;  /* If this is changed the corresponding constant in backgroundImages needs to be changed with it */
+    height: 30vw;
 }
 
 img.backgroundImgClicked{
@@ -289,7 +287,7 @@ p.backgroundImgText{
         opacity: 50%;
     }
     100% {
-        transform: translateY(var(--fallDestinationY)) rotate(var(--randDeg));
+        transform: translateY(calc(100vh + 30vw)) rotate(var(--randDeg));
         opacity: 0%;
     }
 }
@@ -318,6 +316,11 @@ p.backgroundImgText{
 
 /* Horizontal screen styles*/
 @media (min-aspect-ratio: 1/1){
+    body{
+        border: 2.5vw solid rgb(255, 127, 127);
+        border-image: url('../images/Border.png') 64 round;
+    }
+
     header{
         font-size: 3vw;
     }
@@ -334,5 +337,21 @@ p.backgroundImgText{
     .ToTitle{
         border: 0.15vw solid rgb(191, 191, 255);
         font-size: 3vw;
+    }
+
+    img.backgroundImage{
+        width: 15vw;  /* If this is changed the corresponding constant in backgroundImages needs to be changed with it */
+        height: 15vw;
+    }
+
+    @keyframes backgroundImageFall{
+        0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 50%;
+        }
+        100% {
+            transform: translateY(calc(100vh + 15vw)) rotate(var(--randDeg));
+            opacity: 0%;
+        }
     }
 }
