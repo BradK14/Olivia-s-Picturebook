@@ -80,19 +80,18 @@ a:hover{
 
 #PlayBody{
     position: relative;
-    top: 30vh;
+    top: 20vh;
 }
 
 .ImageLocation{
     display: flex;
-    height: 30vw;
-    width: 30vw;
-    margin: 1vw;
-
+    height: 70vw;
+    width: 70vw;
+    margin: 5vw;
     align-items: center;
     justify-self: center;
     flex-direction: column;
-    border: 0.6vw solid rgb(191, 191, 255);
+    border: 1vw solid rgb(191, 191, 255);
     background-color: rgb(255, 255, 255);
 }
 
@@ -154,13 +153,13 @@ a:hover{
 
 button{
     pointer-events: auto;
-    width: 21vw;
-    height: 4.5vw;
+    width: 42vw;
+    height: 9vw;
     font-family: DynaPuff;
-    font-size: 3vw;
+    font-size: 5vw;
     color: rgb(191, 191, 255);
     background-color: rgb(255, 255, 255);
-    border: 0.15vw solid rgb(191, 191, 255);
+    border: 0.3vw solid rgb(191, 191, 255);
     transition: color 0.25s ease-out;
 }
 
@@ -171,13 +170,13 @@ button:hover{
 button:disabled#Correct{
     color: rgb(31, 223, 31);
     background-color: rgb(223, 223, 223);
-    border: 0.15vw solid rgb(31, 223, 31);
+    border: 0.3vw solid rgb(31, 223, 31);
 }
 
 button:disabled#Incorrect{
     color: rgb(223, 95, 95);
     background-color: rgb(223, 223, 223);
-    border: 0.15vw solid rgb(223, 95, 95);
+    border: 0.3vw solid rgb(223, 95, 95);
 }
 
 ::spelling-error{
@@ -186,12 +185,12 @@ button:disabled#Incorrect{
 
 input{
     pointer-events: auto;
-    width: 21vw;
-    height: 4.5vw;
+    width: 42vw;
+    height: 9vw;
     color: rgb(191, 191, 255);
-    border: 0.15vw solid rgb(191, 191, 255);
+    border: 0.3vw solid rgb(191, 191, 255);
     font-family: DynaPuff;
-    font-size: 3vw;
+    font-size: 5vw;
     text-align: center;
 }
 
@@ -352,14 +351,36 @@ p.backgroundImgText{
         position: static;
     }
 
-    /* .ImageLocation{
+    .ImageLocation{
         height: 30vw;
         width: 30vw;
         margin: 1vw;
         border: 0.3vw solid rgb(191, 191, 255);
-    } */
+    }
 
     .ToTitle{
+        border: 0.15vw solid rgb(191, 191, 255);
+        font-size: 3vw;
+    }
+
+    button{
+        width: 21vw;
+        height: 4.5vw;
+        font-size: 3vw;
+        border: 0.15vw solid rgb(191, 191, 255);
+    }
+
+    button:disabled#Correct{
+        border: 0.15vw solid rgb(31, 223, 31);
+    }
+
+    button:disabled#Incorrect{
+        border: 0.15vw solid rgb(223, 95, 95);
+    }
+
+    input{
+        width: 21vw;
+        height: 4.5vw;
         border: 0.15vw solid rgb(191, 191, 255);
         font-size: 3vw;
     }
