@@ -123,27 +123,29 @@ a:hover{
 .PhotoAlbumLocation{
     pointer-events: auto;
     display: flex;
-    height: 85vh;
-    width: 52.5vw;
+    position: relative;
+    top: 7.5vh;
+    height: 80vh;
+    width: 80vw;
     margin: 2vh;
     justify-self: center;
     justify-content: space-evenly;
     flex-direction: row;
     flex-wrap: wrap;
     overflow-y: auto;
-    border: 0.3vw solid rgb(191, 191, 255);
+    border: 0.6vw solid rgb(191, 191, 255);
     background-color: rgb(255, 255, 255);
 }
 
 .AlbumPhoto{
     padding: 0.5em;
     text-align: center;
-    font-size: 1vw;
+    font-size: 3vw;
 }
 
 .AlbumPhoto img{
-    width: 10vw;
-    height: 10vw;
+    width: 20vw;
+    height: 20vw;
 }
 
 .InputLocation{
@@ -278,7 +280,7 @@ img.backgroundImgClicked{
 p.backgroundImgText{
     position: fixed;
     z-index: 2;
-    font-size: 2vw;
+    font-size: 4vw;  /* The animation handles font size so this isn't really used */
     pointer-events: none;
     text-align: center;
     top: var(--posY);
@@ -313,11 +315,11 @@ p.backgroundImgText{
 
 @keyframes backgroundImgTextDisplay{
     0% {
-        font-size: 2vw;
+        font-size: 4vw;
         opacity: 100%;
     }
     100% {
-        font-size: 4vw;
+        font-size: 8vw;
         opacity: 0%;
     }
 }
@@ -358,6 +360,22 @@ p.backgroundImgText{
         border: 0.3vw solid rgb(191, 191, 255);
     }
 
+    .PhotoAlbumLocation{
+        position: static;
+        height: 85vh;
+        width: 52.5vw;
+        border: 0.3vw solid rgb(191, 191, 255);
+    }
+
+    .AlbumPhoto{
+        font-size: 1.5vw;
+    }
+
+    .AlbumPhoto img{
+        width: 10vw;
+        height: 10vw;
+    }
+
     .ToTitle{
         border: 0.15vw solid rgb(191, 191, 255);
         font-size: 3vw;
@@ -390,6 +408,10 @@ p.backgroundImgText{
         height: 15vw;
     }
 
+    p.backgroundImgText{
+        font-size: 2vw;
+    }
+
     @keyframes backgroundImageFall{
         0% {
             transform: translateY(0) rotate(0deg);
@@ -397,6 +419,17 @@ p.backgroundImgText{
         }
         100% {
             transform: translateY(calc(100vh + 15vw)) rotate(var(--randDeg));
+            opacity: 0%;
+        }
+    }
+
+    @keyframes backgroundImgTextDisplay{
+        0% {
+            font-size: 2vw;
+            opacity: 100%;
+        }
+        100% {
+            font-size: 4vw;
             opacity: 0%;
         }
     }
