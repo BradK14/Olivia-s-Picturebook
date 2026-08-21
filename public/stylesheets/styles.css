@@ -61,10 +61,6 @@ a{
     transition: color 0.25s ease-out;
 }
 
-a:hover{
-    color: rgb(127, 127, 255);
-}
-
 .ToTitle{
     border: 0.3vw solid rgb(191, 191, 255);
     font-size: 5vw;
@@ -163,10 +159,6 @@ button{
     background-color: rgb(255, 255, 255);
     border: 0.3vw solid rgb(191, 191, 255);
     transition: color 0.25s ease-out;
-}
-
-button:hover{
-    color: rgb(127, 127, 255);
 }
 
 button:disabled#Correct{
@@ -432,5 +424,15 @@ p.backgroundImgText{
             font-size: 4vw;
             opacity: 0%;
         }
+    }
+}
+
+@media (hover: hover){
+    a:hover{
+        color: rgb(127, 127, 255);
+    }
+
+    button:hover{
+        color: rgb(127, 127, 255);
     }
 }
