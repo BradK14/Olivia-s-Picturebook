@@ -37,7 +37,9 @@ async function setUpUploadPage(){
     imageNameInput.value = image.alt;
 
     // Set up save button
-    saveButton.addEventListener('click', saveUploadInfo);
+    saveButton.addEventListener('pointerup', saveUploadInfo);
+    saveButton.addEventListener('pointerenter', hoverButton);
+    saveButton.addEventListener('pointerleave', stopHoveringButton);
 }
 
 async function saveUploadInfo(){
@@ -48,6 +50,14 @@ async function saveUploadInfo(){
         });
     const jsonMessage = await res.json();
     console.log(jsonMessage);
+}
+
+function hoverButton(){
+    this.style.color = 'rgb(127, 127, 255)';
+}
+
+function stopHoveringButton(){
+    this.style.color = 'rgb(191, 191, 255)';
 }
 
 // Run the set up of the page
