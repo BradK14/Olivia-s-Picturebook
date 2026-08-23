@@ -40,6 +40,7 @@ async function setUpUploadPage(){
     saveButton.addEventListener('pointerup', saveUploadInfo);
     saveButton.addEventListener('pointerenter', hoverButton);
     saveButton.addEventListener('pointerleave', stopHoveringButton);
+    saveButton.addEventListener('pointercancel', stopHoveringButton);
 }
 
 async function saveUploadInfo(){
@@ -53,11 +54,11 @@ async function saveUploadInfo(){
 }
 
 function hoverButton(){
-    this.style.color = 'rgb(127, 127, 255)';
+    this.classList.add('hovering');
 }
 
 function stopHoveringButton(){
-    this.style.color = 'rgb(191, 191, 255)';
+    this.classList.remove('hovering');
 }
 
 // Run the set up of the page
