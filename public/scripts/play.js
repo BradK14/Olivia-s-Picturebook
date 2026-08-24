@@ -20,7 +20,10 @@ let difficulty;
 // Restart button set up behind the scenes
 const restartButton = document.createElement('button');
 restartButton.textContent = "Restart";
-restartButton.addEventListener('click', onRestart);
+restartButton.addEventListener('pointerup', onRestart);
+restartButton.addEventListener('pointerenter', hoverButton);
+restartButton.addEventListener('pointerleave', stopHoveringButton);
+restartButton.addEventListener('pointercancel', stopHoveringButton);
 
 // A list of indeces for images that have recently been used
 const usedImages = [];
@@ -32,9 +35,12 @@ async function setUpPlay(){
     await getPlayImages();
 
     // Then attach the functions to the difficulty buttons
-    document.getElementById("easyButton").addEventListener("click", startGame);
-    document.getElementById("normalButton").addEventListener("click", startGame);
-    document.getElementById("hardButton").addEventListener("click", startGame);
+    for (let element of difficultyButtons.children){
+        element.addEventListener('pointerup', startGame);
+        element.addEventListener('pointerenter', hoverButton);
+        element.addEventListener('pointerleave', stopHoveringButton);
+        element.addEventListener('pointercancel', stopHoveringButton);
+    }
 }
 
 // Cycles through list of images
@@ -290,6 +296,15 @@ function chooseUnusedImageIndex(usedImgs){
     }
 
     return index;
+}
+
+// Button hovering effects for mobile
+function hoverButton(){
+    this.classList.add('hovering');
+}
+
+function stopHoveringButton(){
+    this.classList.remove('hovering');
 }
 
 // Run the initialization to enable use of this page

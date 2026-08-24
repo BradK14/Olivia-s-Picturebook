@@ -161,7 +161,7 @@ button{
     transition: color 0.25s ease-out;
 }
 
-button.hovering{
+.hovering{
     color: rgb(127, 127, 255);
 }
 
@@ -431,7 +431,7 @@ p.backgroundImgText{
     }
 }
 
-/* @media (hover: hover){
+@media (hover: hover){
     a:hover{
         color: rgb(127, 127, 255);
     }
@@ -439,4 +439,4 @@ p.backgroundImgText{
     button:hover{
         color: rgb(127, 127, 255);
     }
-} */
+}
