@@ -95,28 +95,13 @@ function startGame(){
     image.classList.add('arrive');
 
     // Remove start buttons
+    for (let element of difficultyButtons.children){
+        element.classList.remove('hovering');
+    }
     difficultyButtons.remove();
 
     // Set up inputs
-    if (difficulty === "Easy"){
-        for (let i = 0; i < 2; i++){
-            inputButtons.push(document.createElement('button'));
-            inputButtons[i].addEventListener("click", disableSelf);
-        }
-        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
-        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
-    }
-    else if (difficulty === "Normal"){
-        for (let i = 0; i < 4; i++){
-            inputButtons.push(document.createElement('button'));
-            inputButtons[i].addEventListener("click", disableSelf);
-        }
-        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
-        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
-        document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
-        document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
-    }
-    else{
+    if (difficulty === 'Hard') {
         inputButtons.push(document.createElement('input'));
         inputButtons.push(document.createElement('button'));
         inputButtons[0].spellcheck = 'false';
@@ -131,6 +116,27 @@ function startGame(){
 
         // Make the enter key activate the GO button
         document.addEventListener('keydown', onKeyDown);
+    }
+    else {  // Easy or Normal
+        // Set the number of buttons based on difficulty
+        let numButtons = difficulty === 'Easy' ? 2 : 4;
+
+        // Set up button functionality
+        for (let i = 0; i < numButtons; i++){
+            inputButtons.push(document.createElement('button'));
+            inputButtons[i].addEventListener('pointerup', disableSelf);
+            inputButtons[i].addEventListener('pointerenter', hoverButton);
+            inputButtons[i].addEventListener('pointerleave', stopHoveringButton);
+            inputButtons[i].addEventListener('pointercancel', stopHoveringButton);
+        }
+
+        // Assign buttons to their appropriate locations
+        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
+        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+        if (difficulty === 'Normal'){
+            document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
+            document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
+        }
     }
 
     setChoices();
@@ -159,6 +165,7 @@ function onRestart(){
     inputButtons.splice(0, inputButtons.length)
 
     // Remove self when done
+    restartButton.classList.remove('hovering');
     restartButton.remove();
 }
 
@@ -268,7 +275,7 @@ function setChoices(){
     const correctChoice = Math.floor(Math.random() * numChoices);
     inputButtons[correctChoice].setAttribute('id', 'Correct');
     inputButtons[correctChoice].textContent = image.alt;
-    inputButtons[correctChoice].addEventListener("click", correctChoiceChosen, {once: true});
+    inputButtons[correctChoice].addEventListener('pointerup', correctChoiceChosen, {once: true});
 
     // Set wrong choices with unused image names
     for (let i = 0; i < numChoices; i++){
