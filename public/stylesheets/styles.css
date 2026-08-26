@@ -159,6 +159,8 @@ button{
     background-color: rgb(255, 255, 255);
     border: 0.3vw solid rgb(191, 191, 255);
     transition: color 0.25s ease-out;
+
+    --color: rgb(191, 191, 255);
 }
 
 .hovering{
@@ -208,8 +210,10 @@ input:disabled{
 @keyframes flashRed{
     0% { color: rgb(255, 127, 127);
     border-color: rgb(255, 127, 127); }
-    100% { color: rgb(191, 191, 255);
-    border-color: rgb(191, 191, 255); }
+    /* 100% { color: rgb(191, 191, 255);
+    border-color: rgb(191, 191, 255); } */
+    100% { color: var(--color);
+    border-color: var(--color); }
 }
 
 img{

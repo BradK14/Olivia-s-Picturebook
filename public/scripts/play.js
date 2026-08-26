@@ -106,7 +106,10 @@ function startGame(){
         inputButtons.push(document.createElement('button'));
         inputButtons[0].spellcheck = 'false';
         inputButtons[1].setAttribute('id', 'Correct');
-        inputButtons[1].addEventListener("click", tryFormEntry);
+        inputButtons[1].addEventListener('pointerup', tryFormEntry);
+        inputButtons[1].addEventListener('pointerenter', hoverButton);
+        inputButtons[1].addEventListener('pointerleave', stopHoveringButton);
+        inputButtons[1].addEventListener('pointercancel', stopHoveringButton);
         inputButtons[1].textContent = "GO";
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
         document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
@@ -308,10 +311,12 @@ function chooseUnusedImageIndex(usedImgs){
 // Button hovering effects for mobile
 function hoverButton(){
     this.classList.add('hovering');
+    this.style.setProperty('--color', 'rgb(127, 127, 255)');
 }
 
 function stopHoveringButton(){
     this.classList.remove('hovering');
+    this.style.setProperty('--color', 'rgb(191, 191, 255)');
 }
 
 // Run the initialization to enable use of this page
