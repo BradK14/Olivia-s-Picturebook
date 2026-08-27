@@ -17,13 +17,8 @@ const inputButtons = [];
 // The currently chosen difficulty
 let difficulty;
 
-// Restart button set up behind the scenes
-const restartButton = document.createElement('button');
-restartButton.textContent = "Restart";
-restartButton.addEventListener('pointerup', onRestart);
-restartButton.addEventListener('pointerenter', hoverButton);
-restartButton.addEventListener('pointerleave', stopHoveringButton);
-restartButton.addEventListener('pointercancel', stopHoveringButton);
+// Restart button set up before it is needed
+const restartButton = new Button(onRestart, "Restart");
 
 // A list of indeces for images that have recently been used
 const usedImages = [];
@@ -76,7 +71,7 @@ function generateAndSetNextImage(){
 // Run this function when clicking a difficulty button
 function startGame(){
     // Append the restart button to the screen
-    document.getElementsByClassName("BackButtonLocation")[0].appendChild(restartButton);
+    document.getElementsByClassName("BackButtonLocation")[0].appendChild(restartButton.button);
 
     // Set difficulty based on which button was pressed
     if (this.id === "easyButton"){
@@ -168,8 +163,7 @@ function onRestart(){
     inputButtons.splice(0, inputButtons.length)
 
     // Remove self when done
-    restartButton.classList.remove('hovering');
-    restartButton.remove();
+    restartButton.disable();
 }
 
 // Input detection for hard difficulty
