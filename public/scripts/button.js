@@ -1,8 +1,18 @@
 class Button{
-    constructor(funct, textContent){
+    constructor(funct, textContent, button){
+        // The function this button was made to activate
         this.funct = funct;
 
-        this.button = document.createElement('button');
+        // If a button was given, then assign it.  Otherwise make a new one.
+        if (button){
+            this.button = button;
+        }
+        else{
+            this.button = document.createElement('button');
+        }
+
+        // If the button doesn't already have text give it the text that was given
+        if (textContent) this.button.textContent = textContent;
 
         this.button.addEventListener('pointerdown', this.readyToClick);
         this.button.addEventListener('pointerup', this.clickButton);
@@ -10,23 +20,28 @@ class Button{
         this.button.addEventListener('pointerleave', this.stopHoveringButton);
         this.button.addEventListener('pointercancel', this.stopHoveringButton);
 
-        if (textContent) this.button.textContent = textContent;
-
         this.clicked = false;
     }
 
+    // Functions
+    // Removes and resets the button to default values
     disable() {
-        this.button.classList.remove('hovering');
-        this.clicked = false;
+        this.reset();
         this.button.remove();
     }
 
+    reset() {
+        this.button.classList.remove('hovering');
+        this.clicked = false;
+    }
+
+    // These functions are the default functions for any button actions
     readyToClick = () => {
         this.clicked = true;
     }
 
-    clickButton = () => {
-        if (this.clicked) this.funct();
+    clickButton = (e) => {
+        if (this.clicked) this.funct(e);
     }
 
     hoverButton = () => {

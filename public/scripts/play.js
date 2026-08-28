@@ -3,7 +3,8 @@
 // playImages
 
 // Set up for difficulty buttons
-const difficultyButtons = document.getElementById("difficultyButtons");
+const difficultyButtonContainer = document.getElementById("difficultyButtons");
+const difficultyButtons = [];
 
 // This holds the current shown image
 let image;
@@ -30,11 +31,8 @@ async function setUpPlay(){
     await getPlayImages();
 
     // Then attach the functions to the difficulty buttons
-    for (let element of difficultyButtons.children){
-        element.addEventListener('pointerup', startGame);
-        element.addEventListener('pointerenter', hoverButton);
-        element.addEventListener('pointerleave', stopHoveringButton);
-        element.addEventListener('pointercancel', stopHoveringButton);
+    for (const element of difficultyButtonContainer.children){
+        difficultyButtons.push(new Button(startGame, false, element));
     }
 }
 
@@ -69,15 +67,15 @@ function generateAndSetNextImage(){
 }
 
 // Run this function when clicking a difficulty button
-function startGame(){
+function startGame(e){
     // Append the restart button to the screen
     document.getElementsByClassName("BackButtonLocation")[0].appendChild(restartButton.button);
 
     // Set difficulty based on which button was pressed
-    if (this.id === "easyButton"){
+    if (e.target.id === "easyButton"){
         difficulty = "Easy";
     }
-    else if (this.id === "normalButton"){
+    else if (e.target.id === "normalButton"){
         difficulty = "Normal";
     }
     else {
@@ -90,10 +88,10 @@ function startGame(){
     image.classList.add('arrive');
 
     // Remove start buttons
-    for (let element of difficultyButtons.children){
-        element.classList.remove('hovering');
+    for (let element of difficultyButtons){
+        element.reset();
     }
-    difficultyButtons.remove();
+    difficultyButtonContainer.remove();
 
     // Set up inputs
     if (difficulty === 'Hard') {
@@ -153,7 +151,7 @@ function onRestart(){
     }
 
     // Place difficulty buttons back in
-    document.getElementsByClassName("ImageLocation")[0].appendChild(difficultyButtons);
+    document.getElementsByClassName("ImageLocation")[0].appendChild(difficultyButtonContainer);
 
     // Remove inputs
     for (let inp of inputButtons){
