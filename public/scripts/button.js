@@ -21,11 +21,16 @@ class Button{
         this.button.addEventListener('pointercancel', this.stopHoveringButton);
 
         this.clicked = false;
+        this.disabled = false;
     }
 
     // Functions
+    addNewEvent(type, listener, options){
+        this.button.addEventListener(type, listener, options);
+    }
+
     // Removes and resets the button to default values
-    disable() {
+    remove() {
         this.reset();
         this.button.remove();
     }
@@ -41,7 +46,12 @@ class Button{
     }
 
     clickButton = (e) => {
-        if (this.clicked) this.funct(e);
+        if (this.clicked && !this.button.disabled){
+            this.funct(e);
+        }
+        else{
+            e.stopImmediatePropagation();
+        }
     }
 
     hoverButton = () => {

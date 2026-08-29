@@ -96,16 +96,11 @@ function startGame(e){
     // Set up inputs
     if (difficulty === 'Hard') {
         inputButtons.push(document.createElement('input'));
-        inputButtons.push(document.createElement('button'));
         inputButtons[0].spellcheck = 'false';
-        inputButtons[1].setAttribute('id', 'Correct');
-        inputButtons[1].addEventListener('pointerup', tryFormEntry);
-        inputButtons[1].addEventListener('pointerenter', hoverButton);
-        inputButtons[1].addEventListener('pointerleave', stopHoveringButton);
-        inputButtons[1].addEventListener('pointercancel', stopHoveringButton);
-        inputButtons[1].textContent = "GO";
+        inputButtons.push(new Button(tryFormEntry, "GO"));
+        inputButtons[1].button.setAttribute('id', 'Correct');
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
-        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+        document.getElementById("ChoiceTwo").appendChild(inputButtons[1].button);
 
         // Focus in the input section upon starting hard mode
         inputButtons[0].focus();
@@ -119,19 +114,15 @@ function startGame(e){
 
         // Set up button functionality
         for (let i = 0; i < numButtons; i++){
-            inputButtons.push(document.createElement('button'));
-            inputButtons[i].addEventListener('pointerup', disableSelf);
-            inputButtons[i].addEventListener('pointerenter', hoverButton);
-            inputButtons[i].addEventListener('pointerleave', stopHoveringButton);
-            inputButtons[i].addEventListener('pointercancel', stopHoveringButton);
+            inputButtons.push(new Button(disableSelf));
         }
 
         // Assign buttons to their appropriate locations
-        document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
-        document.getElementById("ChoiceTwo").appendChild(inputButtons[1]);
+        document.getElementById("ChoiceOne").appendChild(inputButtons[0].button);
+        document.getElementById("ChoiceTwo").appendChild(inputButtons[1].button);
         if (difficulty === 'Normal'){
-            document.getElementById("ChoiceThree").appendChild(inputButtons[2]);
-            document.getElementById("ChoiceFour").appendChild(inputButtons[3]);
+            document.getElementById("ChoiceThree").appendChild(inputButtons[2].button);
+            document.getElementById("ChoiceFour").appendChild(inputButtons[3].button);
         }
     }
 
@@ -155,35 +146,42 @@ function onRestart(){
 
     // Remove inputs
     for (let inp of inputButtons){
-        inp.remove();
-        inp = null;
+        if (inp.tagName === 'INPUT'){
+            inp.remove();
+            inp = null;
+        }
+        else{
+            inp.remove();
+            inp = null;
+        }
+        
     }
     inputButtons.splice(0, inputButtons.length)
 
     // Remove self when done
-    restartButton.disable();
+    restartButton.remove();
 }
 
 // Input detection for hard difficulty
 function onKeyDown(event){
     // Enter key attempts to test for a correct answer
-    if (event.key === 'Enter' && !inputButtons[1].disabled){
+    if (event.key === 'Enter' && !inputButtons[1].button.disabled){
         tryFormEntry();
     }
 }
 
 // Hard mode button uses the form enty to check for a correct answer
 function tryFormEntry(){
-    if (inputButtons[1].classList.contains('flashRed')){
-        inputButtons[1].classList.remove('flashRed');
-        void inputButtons[1].offsetWidth;
+    if (inputButtons[1].button.classList.contains('flashRed')){
+        inputButtons[1].button.classList.remove('flashRed');
+        void inputButtons[1].button.offsetWidth;
     }
     if (inputButtons[0].value.toLowerCase() === image.alt.toLowerCase()){
         correctChoiceChosen();
     }
     else{
         // Make the button flash red for a second
-        inputButtons[1].classList.add('flashRed');
+        inputButtons[1].button.classList.add('flashRed');
     }
 }
 
@@ -211,8 +209,8 @@ function randomizeDepartAnimationVariables(){
 }
 
 // Disables a button after it is clicked
-function disableSelf(){
-    this.disabled = true;
+function disableSelf(e){
+    e.target.disabled = true;
 }
 
 // Disables all play inputs
@@ -231,7 +229,12 @@ function disableInputs(disable){
 
     // Disable inputs
     for (let i = 0; i < numChoices; i++){
-        inputButtons[i].disabled = disable;
+        if (inputButtons[i].tagName === "INPUT"){
+            inputButtons[i].disabled = disable;
+        }
+        else{
+            inputButtons[i].button.disabled = disable;
+        }
     }
 
     // When in hard mode, focus on the input field after enabling it
@@ -268,17 +271,17 @@ function setChoices(){
 
     // Choose a location and set the correct choice
     const correctChoice = Math.floor(Math.random() * numChoices);
-    inputButtons[correctChoice].setAttribute('id', 'Correct');
-    inputButtons[correctChoice].textContent = image.alt;
-    inputButtons[correctChoice].addEventListener('pointerup', correctChoiceChosen, {once: true});
+    inputButtons[correctChoice].button.setAttribute('id', 'Correct');
+    inputButtons[correctChoice].button.textContent = image.alt;
+    inputButtons[correctChoice].addNewEvent('pointerup', correctChoiceChosen, {once: true});
 
     // Set wrong choices with unused image names
     for (let i = 0; i < numChoices; i++){
         if (i !== correctChoice){
             let index = chooseUnusedImageIndex(usedNames);
             usedNames.push(index);
-            inputButtons[i].textContent = playImages[index].alt;
-            inputButtons[i].setAttribute('id', 'Incorrect');
+            inputButtons[i].button.textContent = playImages[index].alt;
+            inputButtons[i].button.setAttribute('id', 'Incorrect');
         }
     }
 }
@@ -298,17 +301,6 @@ function chooseUnusedImageIndex(usedImgs){
     }
 
     return index;
-}
-
-// Button hovering effects for mobile
-function hoverButton(){
-    this.classList.add('hovering');
-    this.style.setProperty('--color', 'rgb(127, 127, 255)');
-}
-
-function stopHoveringButton(){
-    this.classList.remove('hovering');
-    this.style.setProperty('--color', 'rgb(191, 191, 255)');
 }
 
 // Run the initialization to enable use of this page
