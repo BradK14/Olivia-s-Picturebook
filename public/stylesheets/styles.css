@@ -440,8 +440,4 @@ p.backgroundImgText{
     a:hover{
         color: rgb(127, 127, 255);
     }
-
-    button:hover{
-        color: rgb(127, 127, 255);
-    }
 }

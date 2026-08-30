@@ -4,7 +4,7 @@
 
 const imageLocation = document.querySelector('.ImageLocation');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
-const saveButton = document.querySelector('#SaveButton');
+const saveButton = new Button(saveUploadInfo, false, document.querySelector('#SaveButton'));
 
 let uploadImage;
 
@@ -35,12 +35,6 @@ async function setUpUploadPage(){
 
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
-
-    // Set up save button
-    saveButton.addEventListener('pointerup', saveUploadInfo);
-    saveButton.addEventListener('pointerenter', hoverButton);
-    saveButton.addEventListener('pointerleave', stopHoveringButton);
-    saveButton.addEventListener('pointercancel', stopHoveringButton);
 }
 
 async function saveUploadInfo(){
@@ -51,14 +45,6 @@ async function saveUploadInfo(){
         });
     const jsonMessage = await res.json();
     console.log(jsonMessage);
-}
-
-function hoverButton(){
-    this.classList.add('hovering');
-}
-
-function stopHoveringButton(){
-    this.classList.remove('hovering');
 }
 
 // Run the set up of the page
