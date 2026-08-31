@@ -41,8 +41,14 @@ app.get("/Olivia's_Picturebook/upload", (request, response) => {
     return response.sendFile(path.join(rootDir, "views", "upload.ejs"));
 });
 
-app.post("/Olivia's_Picturebook/upload/save", (request, response) => {
-    console.log(request.body);
+app.post("/Olivia's_Picturebook/upload/save", async (request, response) => {
+    try {
+        await fs.writeFile(savePath, JSON.stringify(request.body, null, 2), 'utf8');
+        console.log("Saved\n", request.body);
+    } catch (error) {
+        console.error('Error writing to file:', error);
+    }
+    
     return response.json({message: 'Save not yet implemented'});
 });
 
