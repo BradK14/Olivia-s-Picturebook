@@ -49,7 +49,7 @@ app.post("/Olivia's_Picturebook/upload/save", async (request, response) => {
         console.error('Error writing to file:', error);
     }
     
-    return response.json({message: 'Save not yet implemented'});
+    return response.json({message: 'Saved'});
 });
 
 app.get("/Olivia's_Picturebook/save", async (request, response) => {

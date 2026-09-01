@@ -38,13 +38,37 @@ async function setUpUploadPage(){
 }
 
 async function saveUploadInfo(){
+    // Capture and validate image information
+    const iName = imageNameInput.value;
+    // Can't use the default upload image
+    if (uploadImage.alt.toLowerCase() === 'upload'){
+        console.log("NOT SAVED: No image given");
+    }
+    // Can't use the name upload
+    if (iName.toLowerCase() === 'upload'){
+        console.log("NOT SAVED: Can not use upload as the image's name");
+        return;
+    }
+    // Can't use a pre-existing name
+    for (let pi of playImages){
+        if (iName.toLowerCase() === pi.alt.toLowerCase()){
+            console.log("NOT SAVED: This image name is already in use");
+            return;
+        }
+    }
+
+    // Change the local playImage container's value before passing it to the server
+    // playImages.push({ src: uploadImage.src, alt: iName });
+
+    // Then post it to server
     const res = await fetch("/Olivia's_Picturebook/upload/save", {
-          method: "POST",
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({playImages})
-        });
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({playImages})
+    });
     const jsonMessage = await res.json();
     console.log(jsonMessage);
+
 }
 
 // Run the set up of the page
