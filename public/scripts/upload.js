@@ -2,7 +2,7 @@
 // This file borrows the playImages variable from the playImages file, and will not work properly without it included
 // playImages
 
-const imageLocation = document.querySelector('.ImageLocation');
+const imageLocation = document.querySelector('#imageUploadLabel');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
 const saveButton = new Button(saveUploadInfo, false, document.querySelector('#SaveButton'));
 

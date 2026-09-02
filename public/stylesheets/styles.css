@@ -97,6 +97,13 @@ a{
     object-fit: cover;
 }
 
+label{
+    height: 100%;
+    width: 100%;
+    pointer-events: auto;
+    object-fit: cover;
+}
+
 #difficultyButtons{
     background-color: rgb(191, 191, 255);  /* Matches the border color of image location and buttons to fix one pixel gap errors */
     display: flex;
