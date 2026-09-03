@@ -6,7 +6,11 @@ const imageLocation = document.querySelector('#imageUploadLabel');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
 const saveButton = new Button(saveUploadInfo, false, document.querySelector('#SaveButton'));
 
-let uploadImage;
+let defaultImage;
+let image = document.createElement('img');
+imageLocation.appendChild(image);
+
+const imageFileInputter = document.querySelector('#imageUpload');
 
 async function setUpUploadPage(){
     // First retrieve the list of play images
@@ -14,35 +18,41 @@ async function setUpUploadPage(){
 
     // Find the existing image from the url query in the playImage database if there is one
     for (let playImage of playImages){
-        if (window.uploadImage.toLowerCase() === playImage.alt.toLowerCase()){
-            uploadImage = playImage;
+        if (window.defaultImage.toLowerCase() === playImage.alt.toLowerCase()){
+            defaultImage = playImage;
         }
     }
 
     // If there wasn't a matching image, default to the upload new image image
-    if (!uploadImage){
-        uploadImage = {
+    if (!defaultImage){
+        defaultImage = {
             src: '/images/Upload.png',
             alt: 'Upload'
         }
     }
 
     // Create and set the image on the screen
-    const image = document.createElement('img');
-    image.src = uploadImage.src;
-    image.alt = uploadImage.alt;
-    imageLocation.appendChild(image);
+    image.src = defaultImage.src;
+    image.alt = defaultImage.alt;
 
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
+
+    // Set up events for the image input system
+    imageFileInputter.addEventListener('change', setAndDisplayImageAfterInput);
 }
 
 async function saveUploadInfo(){
     // Capture and validate image information
+    for (let f of imageFileInputter.files){
+        console.log(f);
+    }
+    // console.log(imageFileInputter.files);
     const iName = imageNameInput.value;
     // Can't use the default upload image
-    if (uploadImage.alt.toLowerCase() === 'upload'){
+    if (image.alt.toLowerCase() === 'upload'){
         console.log("NOT SAVED: No image given");
+        return;
     }
     // Can't use the name upload
     if (iName.toLowerCase() === 'upload'){
@@ -58,7 +68,7 @@ async function saveUploadInfo(){
     }
 
     // Change the local playImage container's value before passing it to the server
-    // playImages.push({ src: uploadImage.src, alt: iName });
+    // playImages.push({ src: defaultImage.src, alt: iName });
 
     // Then post it to server
     const res = await fetch("/Olivia's_Picturebook/upload/save", {
@@ -68,7 +78,12 @@ async function saveUploadInfo(){
     });
     const jsonMessage = await res.json();
     console.log(jsonMessage);
+}
 
+function setAndDisplayImageAfterInput(e){
+    const imageURL = URL.createObjectURL(e.target.files[0]);
+    console.log(imageURL);
+    image.src = imageURL;
 }
 
 // Run the set up of the page

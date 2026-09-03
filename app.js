@@ -32,10 +32,10 @@ app.get("/Olivia's_Picturebook/photo_album", (request, response) => {
 
 app.get("/Olivia's_Picturebook/upload", (request, response) => {
     if (!request.query.playImage){
-        response.render('upload', { uploadImage: '' });
+        response.render('upload', { defaultImage: '' });
     }
     else{
-        response.render('upload', { uploadImage: request.query.playImage });
+        response.render('upload', { defaultImage: request.query.playImage });
     }
 
     return response.sendFile(path.join(rootDir, "views", "upload.ejs"));
