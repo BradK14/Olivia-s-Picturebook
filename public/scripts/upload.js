@@ -40,6 +40,11 @@ async function setUpUploadPage(){
 
     // Set up events for the image input system
     imageFileInputter.addEventListener('change', setAndDisplayImageAfterInput);
+
+    // Event for dragging and dropping an image file into the label
+    imageLocation.addEventListener('drop', (e) => {e.preventDefault()});
+    imageLocation.addEventListener('dragover', (e) => {e.preventDefault()});
+    imageLocation.addEventListener('drop', dropImageIn);
 }
 
 async function saveUploadInfo(){
@@ -82,8 +87,20 @@ async function saveUploadInfo(){
 
 function setAndDisplayImageAfterInput(e){
     const imageURL = URL.createObjectURL(e.target.files[0]);
-    console.log(imageURL);
     image.src = imageURL;
+}
+
+function dropImageIn(e){
+    // Receive and validate files
+    const files = e.dataTransfer.files;
+    if(files.length !== 1){
+        console.log("Only one image can be given");
+        return;
+    }
+
+    // Set up and trigger the file input change event
+    imageFileInputter.files = files;
+    imageFileInputter.dispatchEvent(new Event('change'));
 }
 
 // Run the set up of the page
