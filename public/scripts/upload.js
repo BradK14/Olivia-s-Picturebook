@@ -49,10 +49,6 @@ async function setUpUploadPage(){
 
 async function saveUploadInfo(){
     // Capture and validate image information
-    for (let f of imageFileInputter.files){
-        console.log(f);
-    }
-    // console.log(imageFileInputter.files);
     const iName = imageNameInput.value;
     // Can't use the default upload image
     if (image.alt.toLowerCase() === 'upload'){
@@ -73,6 +69,7 @@ async function saveUploadInfo(){
     }
 
     // Change the local playImage container's value before passing it to the server
+    image.alt = iName;
     // playImages.push({ src: defaultImage.src, alt: iName });
 
     // Then post it to server
@@ -82,12 +79,12 @@ async function saveUploadInfo(){
         body: JSON.stringify({playImages})
     });
     const jsonMessage = await res.json();
-    console.log(jsonMessage);
+    console.log(jsonMessage.message);
 }
 
 function setAndDisplayImageAfterInput(e){
-    const imageURL = URL.createObjectURL(e.target.files[0]);
-    image.src = imageURL;
+    image.src = URL.createObjectURL(e.target.files[0]);
+    image.alt = "";
 }
 
 function dropImageIn(e){
