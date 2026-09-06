@@ -9,6 +9,7 @@ const saveButton = new Button(saveUploadInfo, false, document.querySelector('#Sa
 let defaultImage;
 let image = document.createElement('img');
 imageLocation.appendChild(image);
+let imageBlob;
 
 const imageFileInputter = document.querySelector('#imageUpload');
 
@@ -72,6 +73,20 @@ async function saveUploadInfo(){
     image.alt = iName;
     // playImages.push({ src: defaultImage.src, alt: iName });
 
+    // TESTING LOCAL UPLOAD
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const imgStr = e.target.result;
+        const imgArr = [imgStr];  // CHANGE THIS TO CONTINUE ADDING NEW IMAGES RATHER THAN REPLACING A SINGLE IMAGE
+        localStorage.setItem('images', JSON.stringify(imgArr));
+    }
+    reader.readAsDataURL(imageBlob);
+    // THIS IS AN EXAMPLE OF HOW TO ACCESS THE IMAGE ARRAY
+    const imgStrs = localStorage.getItem('images');
+    const imgs = JSON.parse(imgStrs);
+    console.log(imgs);
+    // END TESTS
+
     // Then post it to server
     const res = await fetch("/Olivia's_Picturebook/upload/save", {
         method: "POST",
@@ -83,6 +98,7 @@ async function saveUploadInfo(){
 }
 
 function setAndDisplayImageAfterInput(e){
+    imageBlob = e.target.files[0];
     image.src = URL.createObjectURL(e.target.files[0]);
     image.alt = "";
 }
