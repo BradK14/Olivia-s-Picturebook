@@ -36,6 +36,13 @@ async function setUpUploadPage(){
     image.src = defaultImage.src;
     image.alt = defaultImage.alt;
 
+    // TEST GETTING IMAGE FROM LOCAL STORAGE
+    const imgStrs = localStorage.getItem('images');
+    const imgs = JSON.parse(imgStrs);
+    image.src = imgs[0];
+    console.log(imgs[0]);
+    // END TEST
+
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
 
