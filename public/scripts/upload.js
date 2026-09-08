@@ -37,10 +37,9 @@ async function setUpUploadPage(){
     image.alt = defaultImage.alt;
 
     // TEST GETTING IMAGE FROM LOCAL STORAGE
-    const imgStrs = localStorage.getItem('images');
-    const imgs = JSON.parse(imgStrs);
-    image.src = imgs[0];
-    console.log(imgs[0]);
+    // const imgStrs = localStorage.getItem('playImages');
+    // const imgs = JSON.parse(imgStrs);
+    // image.src = imgs[0].src;
     // END TEST
 
     // Create and set text title at the bottom of the page
@@ -85,23 +84,24 @@ async function saveUploadInfo(){
     reader.onload = function (e) {
         const imgStr = e.target.result;
         const imgArr = [imgStr];  // CHANGE THIS TO CONTINUE ADDING NEW IMAGES RATHER THAN REPLACING A SINGLE IMAGE
-        localStorage.setItem('images', JSON.stringify(imgArr));
+        localStorage.setItem('playImages', JSON.stringify(imgArr));
     }
     reader.readAsDataURL(imageBlob);
     // THIS IS AN EXAMPLE OF HOW TO ACCESS THE IMAGE ARRAY
-    const imgStrs = localStorage.getItem('images');
+    const imgStrs = localStorage.getItem('playImages');
     const imgs = JSON.parse(imgStrs);
     console.log(imgs);
     // END TESTS
 
     // Then post it to server
-    const res = await fetch("/Olivia's_Picturebook/upload/save", {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({playImages})
-    });
-    const jsonMessage = await res.json();
-    console.log(jsonMessage.message);
+    // NO LONGER SAVING TO SERVER
+    // const res = await fetch("/Olivia's_Picturebook/upload/save", {
+    //     method: "POST",
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({playImages})
+    // });
+    // const jsonMessage = await res.json();
+    // console.log(jsonMessage.message);
 }
 
 function setAndDisplayImageAfterInput(e){

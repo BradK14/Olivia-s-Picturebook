@@ -21,50 +21,6 @@ async function getPlayImages(){
         const response = await fetch("/Olivia's_Picturebook/save");
         const { playImages: pi } = await response.json();
         playImages = pi;
+        localStorage.setItem('playImages', JSON.stringify(playImages));
     }
 }
-
-// {
-//   "playImages": [
-//     {
-//       "src": "/images/PlayImages/Blueberry.png",
-//       "alt": "Blueberry"
-//     },
-//     {
-//       "src": "/images/PlayImages/Butterfly.png",
-//       "alt": "Butterfly"
-//     },
-//     {
-//       "src": "/images/PlayImages/Cat.png",
-//       "alt": "Cat"
-//     },
-//     {
-//       "src": "/images/PlayImages/Dog.png",
-//       "alt": "Dog"
-//     },
-//     {
-//       "src": "/images/PlayImages/Elephant.png",
-//       "alt": "Elephant"
-//     },
-//     {
-//       "src": "/images/PlayImages/Flower.png",
-//       "alt": "Flower"
-//     },
-//     {
-//       "src": "/images/PlayImages/IceCream.png",
-//       "alt": "Ice Cream"
-//     },
-//     {
-//       "src": "/images/PlayImages/Ladybug.png",
-//       "alt": "Ladybug"
-//     },
-//     {
-//       "src": "/images/PlayImages/Spider.png",
-//       "alt": "Spider"
-//     },
-//     {
-//       "src": "/images/PlayImages/Strawberry.png",
-//       "alt": "Strawberry"
-//     }
-//   ]
-// }
