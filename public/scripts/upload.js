@@ -5,6 +5,7 @@
 const imageLocation = document.querySelector('#imageUploadLabel');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
 const saveButton = new Button(saveUploadInfo, false, document.querySelector('#SaveButton'));
+const deleteButton = new Button(deleteImageAndReturnToAlbum, false, document.querySelector('#DeleteButton'));
 
 let defaultImage;
 let image = document.createElement('img');
@@ -121,6 +122,11 @@ function dropImageIn(e){
     // Set up and trigger the file input change event
     imageFileInputter.files = files;
     imageFileInputter.dispatchEvent(new Event('change'));
+}
+
+// Deletes the image if it is in the album, and returns to the photo album screen
+function deleteImageAndReturnToAlbum(){
+    // TODO
 }
 
 // Run the set up of the page

@@ -187,6 +187,13 @@ button:disabled#Incorrect{
     border: 0.3vw solid rgb(223, 95, 95);
 }
 
+#DeleteButtonLocation{
+    position: fixed;
+    bottom: 8vw;
+    right: 50%;
+    transform: translateX(50%);
+}
+
 ::spelling-error{
     text-decoration: none;
 }
@@ -218,8 +225,6 @@ input:disabled{
 @keyframes flashRed{
     0% { color: rgb(255, 127, 127);
     border-color: rgb(255, 127, 127); }
-    /* 100% { color: rgb(191, 191, 255);
-    border-color: rgb(191, 191, 255); } */
     100% { color: var(--color);
     border-color: var(--color); }
 }
@@ -402,6 +407,12 @@ p.backgroundImgText{
 
     button:disabled#Incorrect{
         border: 0.15vw solid rgb(223, 95, 95);
+    }
+
+    #DeleteButtonLocation{
+        transform: translateX(0%);
+        bottom: 4vw;
+        right: 4vw;
     }
 
     input{
