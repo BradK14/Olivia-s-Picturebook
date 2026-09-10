@@ -126,7 +126,21 @@ function dropImageIn(e){
 
 // Deletes the image if it is in the album, and returns to the photo album screen
 function deleteImageAndReturnToAlbum(){
-    // TODO
+    // Attempt to remove the current image from the playImages array
+    let deleteSuccessful = false;
+    for (let i = 0; i < playImages.length; i++){
+        if (image.alt === playImages[i].alt){
+            playImages.splice(i, 1);
+            deleteSuccessful = true;
+            break;
+        }
+    }
+
+    // After successful deletion, reset the playImages in local storage and return to photo album
+    if (deleteSuccessful){
+        localStorage.setItem('playImages', JSON.stringify(playImages));
+        window.location.href = "/Olivia's_Picturebook/photo_album";
+    }
 }
 
 // Run the set up of the page
