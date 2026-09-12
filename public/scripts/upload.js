@@ -37,12 +37,6 @@ async function setUpUploadPage(){
     image.src = defaultImage.src;
     image.alt = defaultImage.alt;
 
-    // TEST GETTING IMAGE FROM LOCAL STORAGE
-    // const imgStrs = localStorage.getItem('playImages');
-    // const imgs = JSON.parse(imgStrs);
-    // image.src = imgs[0].src;
-    // END TEST
-
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
 
@@ -76,33 +70,15 @@ async function saveUploadInfo(){
         }
     }
 
-    // Change the local playImage container's value before passing it to the server
-    image.alt = iName;
-    // playImages.push({ src: defaultImage.src, alt: iName });
-
-    // TESTING LOCAL UPLOAD
+    // Add the image to the local variable and return to the album
     const reader = new FileReader();
     reader.onload = function (e) {
         const imgStr = e.target.result;
-        const imgArr = [imgStr];  // CHANGE THIS TO CONTINUE ADDING NEW IMAGES RATHER THAN REPLACING A SINGLE IMAGE
-        localStorage.setItem('playImages', JSON.stringify(imgArr));
+        playImages.push({src: imgStr, alt: iName});
+        localStorage.setItem('playImages', JSON.stringify(playImages));
     }
     reader.readAsDataURL(imageBlob);
-    // THIS IS AN EXAMPLE OF HOW TO ACCESS THE IMAGE ARRAY
-    const imgStrs = localStorage.getItem('playImages');
-    const imgs = JSON.parse(imgStrs);
-    console.log(imgs);
-    // END TESTS
-
-    // Then post it to server
-    // NO LONGER SAVING TO SERVER
-    // const res = await fetch("/Olivia's_Picturebook/upload/save", {
-    //     method: "POST",
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({playImages})
-    // });
-    // const jsonMessage = await res.json();
-    // console.log(jsonMessage.message);
+    window.location.href = "/Olivia's_Picturebook/photo_album";
 }
 
 function setAndDisplayImageAfterInput(e){
