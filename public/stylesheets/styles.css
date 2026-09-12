@@ -175,15 +175,20 @@ button{
     color: rgb(127, 127, 255);
 }
 
+button:disabled{
+    color: rgb(191, 191, 255);
+    background-color: rgb(223, 223, 223);
+}
+
 button:disabled#Correct{
     color: rgb(31, 223, 31);
-    background-color: rgb(223, 223, 223);
+    /* background-color: rgb(223, 223, 223); */
     border: 0.3vw solid rgb(31, 223, 31);
 }
 
 button:disabled#Incorrect{
     color: rgb(223, 95, 95);
-    background-color: rgb(223, 223, 223);
+    /* background-color: rgb(223, 223, 223); */
     border: 0.3vw solid rgb(223, 95, 95);
 }
 

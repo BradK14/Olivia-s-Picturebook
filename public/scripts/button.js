@@ -29,6 +29,11 @@ class Button{
         this.button.addEventListener(type, listener, options);
     }
 
+    setDisabled(d){
+        this.disabled = d;
+        this.button.disabled = this.disabled;
+    }
+
     // Removes and resets the button to default values
     remove() {
         this.reset();
@@ -55,13 +60,17 @@ class Button{
     }
 
     hoverButton = () => {
-        this.button.classList.add('hovering');
-        this.button.style.setProperty('--color', 'rgb(127, 127, 255)');
+        if (!this.disabled){
+            this.button.classList.add('hovering');
+            this.button.style.setProperty('--color', 'rgb(127, 127, 255)');
+        }
     }
 
     stopHoveringButton = () => {
-        this.button.classList.remove('hovering');
-        this.button.style.setProperty('--color', 'rgb(191, 191, 255)');
-        this.clicked = false;
+        if (!this.disabled){
+            this.button.classList.remove('hovering');
+            this.button.style.setProperty('--color', 'rgb(191, 191, 255)');
+            this.clicked = false;
+        }
     }
 }

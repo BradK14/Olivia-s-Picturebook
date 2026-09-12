@@ -5,7 +5,9 @@
 const imageLocation = document.querySelector('#imageUploadLabel');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
 const saveButton = new Button(saveUploadInfo, false, document.querySelector('#SaveButton'));
+saveButton.setDisabled(true);
 const deleteButton = new Button(deleteImageAndReturnToAlbum, false, document.querySelector('#DeleteButton'));
+deleteButton.setDisabled(true);
 
 let defaultImage;
 let image = document.createElement('img');
@@ -22,6 +24,7 @@ async function setUpUploadPage(){
     for (let playImage of playImages){
         if (window.defaultImage.toLowerCase() === playImage.alt.toLowerCase()){
             defaultImage = playImage;
+            deleteButton.setDisabled(false);
         }
     }
 
@@ -85,6 +88,8 @@ function setAndDisplayImageAfterInput(e){
     imageBlob = e.target.files[0];
     image.src = URL.createObjectURL(e.target.files[0]);
     image.alt = "";
+    deleteButton.setDisabled(true);
+    saveButton.setDisabled(false);
 }
 
 function dropImageIn(e){
