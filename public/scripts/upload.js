@@ -63,14 +63,29 @@ async function saveUploadInfo(){
     // Can't use the name upload
     if (iName.toLowerCase() === 'upload'){
         console.log("NOT SAVED: Can not use upload as the image's name");
+        showInvalidNameInput();
         return;
     }
     // Can't use a pre-existing name
     for (let pi of playImages){
         if (iName.toLowerCase() === pi.alt.toLowerCase()){
             console.log("NOT SAVED: This image name is already in use");
+            showInvalidNameInput();
             return;
         }
+    }
+    // Can't use an empty string or all space characters as a name
+    let valid = false;
+    for (let char of iName){
+        if (char !== ' '){
+            valid = true;
+            break;
+        }
+    }
+    if (!valid){
+        console.log("NOT SAVED: No image name given");
+        showInvalidNameInput();
+        return;
     }
 
     // Add the image to the local variable and return to the album
@@ -123,6 +138,16 @@ function deleteImageAndReturnToAlbum(){
         window.location.href = "/Olivia's_Picturebook/photo_album";
     }
 }
+
+function showInvalidNameInput(){
+    if (imageNameInput.classList.contains('flashRed')){
+        imageNameInput.classList.remove('flashRed');
+        void imageNameInput.offsetWidth;
+    }
+
+    imageNameInput.classList.add('flashRed');
+}
+
 
 // Run the set up of the page
 setUpUploadPage();
