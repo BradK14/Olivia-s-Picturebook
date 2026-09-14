@@ -148,6 +148,42 @@ function showInvalidNameInput(){
     imageNameInput.classList.add('flashRed');
 }
 
+function cropImageToSquare(imgSrc){
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = imgSrc;
+        img.onload = () => {
+            // Get the shortest side of the image
+            const sideLength = Math.min(img.width, img.height);
+            let sideX = 0;
+            let sideY = 0;
+            if (width > height){
+                sideX = (image.width - image.height) / 2;
+            }
+            else{
+                sideY = (image.height - image.width) / 2;
+            }
+
+            // Set up a canvas object
+            const canvas = document.createElement('canvas');
+            canvas.width = sideLength;
+            canvas.height = sideLength;
+            const context = canvas.getContext('2d');
+
+            // Draw the image with the new cropped dimensions
+            context.drawImage(img, sideX, sideY, sideLength, sideLength, 0, 0, sideLength, sideLength);
+
+            // Return the image URL
+            // resolve(canvas.toDataURL('image/jpeg'));
+            // Return the canvas image blob
+            // resolve(canvas.toBlob());
+        };
+
+        image.onerror = () => {
+            reject(new Error("Failed to crop image"));
+        }
+    });
+}
 
 // Run the set up of the page
 setUpUploadPage();
