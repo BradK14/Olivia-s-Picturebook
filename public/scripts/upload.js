@@ -99,9 +99,9 @@ async function saveUploadInfo(){
     window.location.href = "/Olivia's_Picturebook/photo_album";
 }
 
-function setAndDisplayImageAfterInput(e){
-    imageBlob = e.target.files[0];
-    image.src = URL.createObjectURL(e.target.files[0]);
+async function setAndDisplayImageAfterInput(e){
+    imageBlob = await cropImageToSquare(URL.createObjectURL(e.target.files[0]));
+    image.src = URL.createObjectURL(imageBlob);
     image.alt = "";
     deleteButton.setDisabled(true);
     saveButton.setDisabled(false);
@@ -157,11 +157,11 @@ function cropImageToSquare(imgSrc){
             const sideLength = Math.min(img.width, img.height);
             let sideX = 0;
             let sideY = 0;
-            if (width > height){
-                sideX = (image.width - image.height) / 2;
+            if (img.width > img.height){
+                sideX = (img.width - img.height) / 2;
             }
             else{
-                sideY = (image.height - image.width) / 2;
+                sideY = (img.height - img.width) / 2;
             }
 
             // Set up a canvas object
@@ -173,15 +173,13 @@ function cropImageToSquare(imgSrc){
             // Draw the image with the new cropped dimensions
             context.drawImage(img, sideX, sideY, sideLength, sideLength, 0, 0, sideLength, sideLength);
 
-            // Return the image URL
-            // resolve(canvas.toDataURL('image/jpeg'));
             // Return the canvas image blob
-            // resolve(canvas.toBlob());
+            canvas.toBlob((blob) => { resolve(blob) }, 'image/jpeg');
         };
 
         image.onerror = () => {
             reject(new Error("Failed to crop image"));
-        }
+        };
     });
 }
 
