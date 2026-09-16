@@ -66,14 +66,48 @@ function createUploadAlbumPhoto(){
     return div;
 }
 
+function createDownloadAlbumPhoto(){
+    // Create the div to contain everything
+    const div = document.createElement('div');
+    div.classList.add('AlbumPhoto');
+
+    // Create the image
+    const image = document.createElement('img');
+    image.src = '/images/Upload.png';
+    image.alt = 'Download';
+
+    // Create a button to house the image
+    const button = document.createElement('button');
+    button.appendChild(image);
+
+    // Create the paragraph to give the image's name
+    const p = document.createElement('p');
+    p.textContent = 'Download Default Images';
+
+    // Put the button (that holds the image) and paragraph into the div
+    div.appendChild(button);
+    div.appendChild(p);
+
+    // Return the div
+    return div;
+}
+
 // Function to fill the photo album section with all current play images
 function fillPhotoAlbumWithPlayImages(){
     const photoAlbumLocation = document.querySelector('.PhotoAlbumLocation');
+
+    // Fill the album with the playImages
     playImages.forEach((playImage) => {;
         photoAlbumLocation.appendChild(createAlbumPhoto(playImage));
     });
 
+    // Put a link to an upload page at the end of the album
     photoAlbumLocation.appendChild(createUploadAlbumPhoto());
+
+    // If there are no images, offer a download default images button
+    if (playImages.length <= 0){
+        photoAlbumLocation.appendChild(createDownloadAlbumPhoto());
+    }
 }
 
 // Run the above code and fill the photo album
