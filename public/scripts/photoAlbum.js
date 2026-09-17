@@ -77,15 +77,23 @@ function createDownloadAlbumPhoto(){
     image.alt = 'Download';
 
     // Create a button to house the image
-    const button = document.createElement('button');
-    button.appendChild(image);
+    const button = new Button(async () => {
+        const response = await fetch("/Olivia's_Picturebook/save");
+        const { playImages: pi } = await response.json();
+        pi.forEach((e) => {
+            playImages.push(e);
+        });
+        localStorage.setItem('playImages', JSON.stringify(playImages));
+        fillPhotoAlbumWithPlayImages();
+    });
+    button.button.appendChild(image);
 
     // Create the paragraph to give the image's name
     const p = document.createElement('p');
     p.textContent = 'Download Default Images';
 
     // Put the button (that holds the image) and paragraph into the div
-    div.appendChild(button);
+    div.appendChild(button.button);
     div.appendChild(p);
 
     // Return the div
@@ -95,6 +103,9 @@ function createDownloadAlbumPhoto(){
 // Function to fill the photo album section with all current play images
 function fillPhotoAlbumWithPlayImages(){
     const photoAlbumLocation = document.querySelector('.PhotoAlbumLocation');
+
+    // First remove any existing photos in the album
+    photoAlbumLocation.replaceChildren();
 
     // Fill the album with the playImages
     playImages.forEach((playImage) => {;
