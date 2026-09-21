@@ -34,6 +34,18 @@ async function setUpPlay(){
     for (const element of difficultyButtonContainer.children){
         difficultyButtons.push(new Button(startGame, false, element));
     }
+
+    // If there are less than four play images, disable the start game buttons
+    if (playImages.length < 4) {
+        difficultyButtons.forEach((e) => {
+            e.setDisabled(true);
+        });
+
+        // Display message stating the need for 4 or more play images
+        const message = document.createElement('p');
+        message.textContent = "Must have at least 4 images to play";
+        document.querySelector('.InputLocation').appendChild(message);
+    }
 }
 
 // Cycles through list of images
