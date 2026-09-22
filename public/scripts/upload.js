@@ -2,7 +2,7 @@
 // This file borrows the playImages variable from the playImages file, and will not work properly without it included
 // playImages
 
-const imageLocation = document.querySelector('#imageUploadLabel');
+const imageUploadLabel = document.querySelector('#imageUploadLabel');
 const imageNameInput = document.querySelector('#AlbumPhotoNameInput');
 const saveButton = new Button(saveUploadInfo, false, document.querySelector('#SaveButton'));
 saveButton.setDisabled(true);
@@ -11,7 +11,7 @@ deleteButton.setDisabled(true);
 
 let defaultImage;
 let image = document.createElement('img');
-imageLocation.appendChild(image);
+imageUploadLabel.appendChild(image);
 let imageBlob;
 const imageMoveVars = {};
 
@@ -47,22 +47,27 @@ async function setUpUploadPage(){
     imageMoveVars.pointerY = 0;
 
     // Set the image drag move functions
-    image.addEventListener('pointerdown', (e) => {
+    imageUploadLabel.addEventListener('pointerdown', (e) => {
+        imageFileInputter.disabled = false;  // Allow regular clicks
         imageMoveVars.moving = true;
         imageMoveVars.pointerX = e.clientX;
         imageMoveVars.pointerY = e.clientY;
-        image.setPointerCapture(e.pointerId);
+        imageUploadLabel.classList.remove('returnToPosition');
+        imageUploadLabel.style.transform = `translate(0px, 0px)`;
+        imageUploadLabel.setPointerCapture(e.pointerId);
     });
     document.addEventListener('pointermove', (e) => {
         if (imageMoveVars.moving){
+            imageFileInputter.disabled = true;  // As soon as movement happens, do not allow input
             const xMove = e.clientX - imageMoveVars.pointerX;
             const yMove = e.clientY - imageMoveVars.pointerY;
-            image.style.transform = `translate(${xMove}px, ${yMove}px)`;
+            imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px)`;
         }
     });
     document.addEventListener('pointerup', (e) => {
         imageMoveVars.moving = false;
-        image.style.transform = `translate(0px, 0px)`;
+        // imageUploadLabel.style.transform = `translate(0px, 0px)`;
+        imageUploadLabel.classList.add('returnToPosition');
     });
 
     // Create and set text title at the bottom of the page
@@ -72,9 +77,9 @@ async function setUpUploadPage(){
     imageFileInputter.addEventListener('change', setAndDisplayImageAfterInput);
 
     // Event for dragging and dropping an image file into the label
-    imageLocation.addEventListener('drop', (e) => {e.preventDefault()});
-    imageLocation.addEventListener('dragover', (e) => {e.preventDefault()});
-    imageLocation.addEventListener('drop', dropImageIn);
+    imageUploadLabel.addEventListener('drop', (e) => {e.preventDefault()});
+    imageUploadLabel.addEventListener('dragover', (e) => {e.preventDefault()});
+    imageUploadLabel.addEventListener('drop', dropImageIn);
 }
 
 async function saveUploadInfo(){

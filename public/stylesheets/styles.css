@@ -106,6 +106,17 @@ label{
     cursor: pointer;
 }
 
+label.returnToPosition{
+    animation: returnToPosition 0.5s ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes returnToPosition{
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
+
 #difficultyButtons{
     background-color: rgb(191, 191, 255);  /* Matches the border color of image location and buttons to fix one pixel gap errors */
     display: flex;
