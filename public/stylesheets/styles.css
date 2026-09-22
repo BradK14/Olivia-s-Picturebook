@@ -104,10 +104,11 @@ label{
     pointer-events: auto;
     object-fit: cover;
     cursor: pointer;
+    touch-action: none;
 }
 
 label.returnToPosition{
-    animation: returnToPosition 0.5s ease-out;
+    animation: returnToPosition 0.5s cubic-bezier(0.1, 1, 1, 1);
     animation-fill-mode: forwards;
 }
 
