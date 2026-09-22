@@ -13,6 +13,7 @@ let defaultImage;
 let image = document.createElement('img');
 imageLocation.appendChild(image);
 let imageBlob;
+const imageMoveVars = {};
 
 const imageFileInputter = document.querySelector('#imageUpload');
 
@@ -39,6 +40,30 @@ async function setUpUploadPage(){
     // Create and set the image on the screen
     image.src = defaultImage.src;
     image.alt = defaultImage.alt;
+
+    // Set initial variables for moving the image on the screen
+    imageMoveVars.moving = false;
+    imageMoveVars.pointerX = 0;
+    imageMoveVars.pointerY = 0;
+
+    // Set the image drag move functions
+    image.addEventListener('pointerdown', (e) => {
+        imageMoveVars.moving = true;
+        imageMoveVars.pointerX = e.clientX;
+        imageMoveVars.pointerY = e.clientY;
+        image.setPointerCapture(e.pointerId);
+    });
+    document.addEventListener('pointermove', (e) => {
+        if (imageMoveVars.moving){
+            const xMove = e.clientX - imageMoveVars.pointerX;
+            const yMove = e.clientY - imageMoveVars.pointerY;
+            image.style.transform = `translate(${xMove}px, ${yMove}px)`;
+        }
+    });
+    document.addEventListener('pointerup', (e) => {
+        imageMoveVars.moving = false;
+        image.style.transform = `translate(0px, 0px)`;
+    });
 
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
