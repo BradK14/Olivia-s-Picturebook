@@ -62,7 +62,8 @@ async function setUpUploadPage(){
         if (imageMoveVars.moving){
             const xMove = e.clientX - imageMoveVars.pointerX;
             const yMove = e.clientY - imageMoveVars.pointerY;
-            imageMoveVars.moveDist += xMove + yMove;
+            imageMoveVars.moveDist += xMove < 0 ? xMove * -1 : xMove;
+            imageMoveVars.moveDist += yMove < 0 ? yMove * -1 : yMove;
             if (imageMoveVars.moveDist > 5){
                 imageFileInputter.disabled = true;  // If the image has been dragged away intentionally do not allow input
             }
