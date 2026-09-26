@@ -48,32 +48,9 @@ async function setUpUploadPage(){
     imageMoveVars.moveDist = 0;
 
     // Set the image drag move functions
-    imageUploadLabel.addEventListener('pointerdown', (e) => {
-        imageFileInputter.disabled = false;  // Allow regular clicks
-        imageMoveVars.moving = true;
-        imageMoveVars.pointerX = e.clientX;
-        imageMoveVars.pointerY = e.clientY;
-        imageMoveVars.moveDist = 0;
-        imageUploadLabel.classList.remove('returnToPosition');
-        imageUploadLabel.style.transform = `translate(0px, 0px)`;
-        imageUploadLabel.setPointerCapture(e.pointerId);
-    });
-    document.addEventListener('pointermove', (e) => {
-        if (imageMoveVars.moving){
-            const xMove = e.clientX - imageMoveVars.pointerX;
-            const yMove = e.clientY - imageMoveVars.pointerY;
-            imageMoveVars.moveDist += xMove < 0 ? xMove * -1 : xMove;
-            imageMoveVars.moveDist += yMove < 0 ? yMove * -1 : yMove;
-            if (imageMoveVars.moveDist > 5){
-                imageFileInputter.disabled = true;  // If the image has been dragged away intentionally do not allow input
-            }
-            imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px)`;
-        }
-    });
-    document.addEventListener('pointerup', (e) => {
-        imageMoveVars.moving = false;
-        imageUploadLabel.classList.add('returnToPosition');
-    });
+    imageUploadLabel.addEventListener('pointerdown', beginImageDrag);
+    document.addEventListener('pointermove', dragImage);
+    document.addEventListener('pointerup', stopImageDrag);
 
     // Create and set text title at the bottom of the page
     imageNameInput.value = image.alt;
@@ -216,6 +193,36 @@ function cropImageToSquare(imgSrc){
             reject(new Error("Failed to crop image"));
         };
     });
+}
+
+// Image move functions
+function beginImageDrag(e){
+    imageFileInputter.disabled = false;  // Allow regular clicks
+    imageMoveVars.moving = true;
+    imageMoveVars.pointerX = e.clientX;
+    imageMoveVars.pointerY = e.clientY;
+    imageMoveVars.moveDist = 0;
+    imageUploadLabel.classList.remove('returnToPosition');
+    imageUploadLabel.style.transform = `translate(0px, 0px)`;
+    imageUploadLabel.setPointerCapture(e.pointerId);
+}
+
+function dragImage(e){
+    if (imageMoveVars.moving){
+        const xMove = e.clientX - imageMoveVars.pointerX;
+        const yMove = e.clientY - imageMoveVars.pointerY;
+        imageMoveVars.moveDist += xMove < 0 ? xMove * -1 : xMove;
+        imageMoveVars.moveDist += yMove < 0 ? yMove * -1 : yMove;
+        if (imageMoveVars.moveDist > 5){
+            imageFileInputter.disabled = true;  // If the image has been dragged away intentionally do not allow input
+        }
+        imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px)`;
+    }
+}
+
+function stopImageDrag(e){
+    imageMoveVars.moving = false;
+    imageUploadLabel.classList.add('returnToPosition');
 }
 
 // Run the set up of the page
