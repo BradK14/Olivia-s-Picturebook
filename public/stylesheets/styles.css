@@ -96,6 +96,7 @@ a{
     width: 100%;
     object-fit: cover;
     -webkit-user-drag: none;
+    z-index: 10;
 }
 
 label{
@@ -218,6 +219,7 @@ button:disabled#Incorrect{
     bottom: 8vw;
     right: 50%;
     transform: translateX(50%);
+    z-index: -1;
 }
 
 ::spelling-error{
