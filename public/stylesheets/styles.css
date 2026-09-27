@@ -106,6 +106,7 @@ label{
     object-fit: cover;
     cursor: pointer;
     touch-action: none;
+    transform-origin: center center;
 }
 
 label.returnToPosition{

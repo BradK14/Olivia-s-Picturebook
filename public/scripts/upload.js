@@ -45,6 +45,8 @@ async function setUpUploadPage(){
     imageMoveVars.moving = false;
     imageMoveVars.pointerX = 0;
     imageMoveVars.pointerY = 0;
+    imageMoveVars.prevX = 0;
+    imageMoveVars.prevY = 0;
     imageMoveVars.moveDist = 0;
 
     // Set the image drag move functions
@@ -201,6 +203,8 @@ function beginImageDrag(e){
     imageMoveVars.moving = true;
     imageMoveVars.pointerX = e.clientX;
     imageMoveVars.pointerY = e.clientY;
+    imageMoveVars.prevX = e.clientX;
+    imageMoveVars.prevY = e.clientY;
     imageMoveVars.moveDist = 0;
     imageUploadLabel.classList.remove('returnToPosition');
     imageUploadLabel.style.transform = `translate(0px, 0px)`;
@@ -209,14 +213,37 @@ function beginImageDrag(e){
 
 function dragImage(e){
     if (imageMoveVars.moving){
+        // Math to determine where to move the image
         const xMove = e.clientX - imageMoveVars.pointerX;
         const yMove = e.clientY - imageMoveVars.pointerY;
-        imageMoveVars.moveDist += xMove < 0 ? xMove * -1 : xMove;
-        imageMoveVars.moveDist += yMove < 0 ? yMove * -1 : yMove;
+        const deltaX = imageMoveVars.prevX - e.clientX;
+        const deltaY = imageMoveVars.prevY - e.clientY;
+        // Save total distance moved
+        imageMoveVars.moveDist += deltaX < 0 ? deltaX * -1 : deltaX;
+        imageMoveVars.moveDist += deltaY < 0 ? deltaY * -1 : deltaY;
+        // Use total distance moved to determine if it is ready to disable the file inputter
         if (imageMoveVars.moveDist > 5){
             imageFileInputter.disabled = true;  // If the image has been dragged away intentionally do not allow input
         }
-        imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px)`;
+
+        // Math to determine rotation
+        const rect = image.getBoundingClientRect();
+
+        const degrees = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        console.log(degrees);
+        // const deltaX = 
+        // const deltaX = ((rect.right - rect.left) / 2 + rect.left) - e.clientX;
+        // const deltaY = ((rect.bottom - rect.top) / 2 + rect.top) - e.clientY;
+        // const rotation = Math.atan2(deltaY, deltaX) * (180 / Math.PI) - 90;
+        // const rotation = (Math.PI / 2 - Math.atan2(deltaY, deltaX)) * (180 / Math.PI);
+
+        // Apply movement and rotation
+        // imageUploadLabel.style.transform = `rotate(${degrees}deg)`;
+        imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px) rotate(${degrees}deg)`;
+
+        // Update positional variables
+        imageMoveVars.prevX = e.clientX;
+        imageMoveVars.prevY = e.clientY;
     }
 }
 
