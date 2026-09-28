@@ -48,6 +48,7 @@ async function setUpUploadPage(){
     imageMoveVars.prevX = 0;
     imageMoveVars.prevY = 0;
     imageMoveVars.moveDist = 0;
+    imageMoveVars.distFromCenter = 0;
 
     // Set the image drag move functions
     imageUploadLabel.addEventListener('pointerdown', beginImageDrag);
@@ -199,6 +200,7 @@ function cropImageToSquare(imgSrc){
 
 // Image move functions
 function beginImageDrag(e){
+    // Set and reset initial values
     imageFileInputter.disabled = false;  // Allow regular clicks
     imageMoveVars.moving = true;
     imageMoveVars.pointerX = e.clientX;
@@ -208,37 +210,50 @@ function beginImageDrag(e){
     imageMoveVars.moveDist = 0;
     imageUploadLabel.classList.remove('returnToPosition');
     imageUploadLabel.style.transform = `translate(0px, 0px)`;
-    imageUploadLabel.setPointerCapture(e.pointerId);
+    // imageUploadLabel.setPointerCapture(e.pointerId);
+
+    // Determine length from clicked point to center of image to use for rotation calculation
+    const rect = image.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    // Calculate the hypotenuse between selected point and center of image
+    let distX = e.clientX - centerX;
+    let distY = e.clientY - centerY;
+    distX *= distX;
+    distY *= distY;
+    let dist = 0;
+    dist += distX < 0 ? distX * -1 : distX;
+    dist += distY < 0 ? distY * -1 : distY;
+
+    // Set grab distance from center of the image
+    imageMoveVars.distFromCenter = Math.sqrt(dist);
+
+    // Set pivot point
+    imageUploadLabel.style.transformOrigin = `${e.clientX - rect.left}px ${e.clientY - rect.top}px`;
 }
 
 function dragImage(e){
     if (imageMoveVars.moving){
-        // Math to determine where to move the image
+        // Pivot point location calculation
         const xMove = e.clientX - imageMoveVars.pointerX;
         const yMove = e.clientY - imageMoveVars.pointerY;
+
+        // Save total distance moved
         const deltaX = imageMoveVars.prevX - e.clientX;
         const deltaY = imageMoveVars.prevY - e.clientY;
-        // Save total distance moved
         imageMoveVars.moveDist += deltaX < 0 ? deltaX * -1 : deltaX;
         imageMoveVars.moveDist += deltaY < 0 ? deltaY * -1 : deltaY;
+
         // Use total distance moved to determine if it is ready to disable the file inputter
         if (imageMoveVars.moveDist > 5){
             imageFileInputter.disabled = true;  // If the image has been dragged away intentionally do not allow input
         }
 
         // Math to determine rotation
-        const rect = image.getBoundingClientRect();
-
-        const degrees = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-        console.log(degrees);
-        // const deltaX = 
-        // const deltaX = ((rect.right - rect.left) / 2 + rect.left) - e.clientX;
-        // const deltaY = ((rect.bottom - rect.top) / 2 + rect.top) - e.clientY;
-        // const rotation = Math.atan2(deltaY, deltaX) * (180 / Math.PI) - 90;
-        // const rotation = (Math.PI / 2 - Math.atan2(deltaY, deltaX)) * (180 / Math.PI);
-
+        const radians = Math.atan2(deltaY, deltaX);
+        const degrees = radians * (180 / Math.PI);
+        
         // Apply movement and rotation
-        // imageUploadLabel.style.transform = `rotate(${degrees}deg)`;
         imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px) rotate(${degrees}deg)`;
 
         // Update positional variables
