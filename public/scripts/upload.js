@@ -49,6 +49,7 @@ async function setUpUploadPage(){
     imageMoveVars.prevY = 0;
     imageMoveVars.moveDist = 0;
     imageMoveVars.distFromCenter = 0;
+    imageMoveVars.startingAngle = 0;
 
     // Set the image drag move functions
     imageUploadLabel.addEventListener('pointerdown', beginImageDrag);
@@ -219,6 +220,7 @@ function beginImageDrag(e){
     // Calculate the hypotenuse between selected point and center of image
     let distX = e.clientX - centerX;
     let distY = e.clientY - centerY;
+    const radians = Math.atan2(distY, distX);  // Find the radians for the initial angle
     distX *= distX;
     distY *= distY;
     let dist = 0;
@@ -227,6 +229,9 @@ function beginImageDrag(e){
 
     // Set grab distance from center of the image
     imageMoveVars.distFromCenter = Math.sqrt(dist);
+
+    // Set starting angle
+    imageMoveVars.startingAngle = radians * (180 / Math.PI);
 
     // Set pivot point
     imageUploadLabel.style.transformOrigin = `${e.clientX - rect.left}px ${e.clientY - rect.top}px`;
@@ -252,9 +257,12 @@ function dragImage(e){
         // Math to determine rotation
         const radians = Math.atan2(deltaY, deltaX);
         const degrees = radians * (180 / Math.PI);
+        let totalDegrees = degrees - imageMoveVars.startingAngle + 180;
+        totalDegrees -= totalDegrees > 360 ? 360 : 0;
+        totalDegrees -= totalDegrees > 180 ? 360 : 0;
         
         // Apply movement and rotation
-        imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px) rotate(${degrees}deg)`;
+        imageUploadLabel.style.transform = `translate(${xMove}px, ${yMove}px) rotate(${totalDegrees}deg)`;
 
         // Update positional variables
         imageMoveVars.prevX = e.clientX;
