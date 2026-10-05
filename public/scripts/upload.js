@@ -51,6 +51,7 @@ async function setUpUploadPage(){
     imageMoveVars.distFromCenter = 0;
     imageMoveVars.startingAngle = 0;
     imageMoveVars.prevAngle = 0;
+    imageMoveVars.rotationSpeed = 0;
 
     // Set the image drag move functions
     imageUploadLabel.addEventListener('pointerdown', beginImageDrag);
@@ -210,9 +211,9 @@ function beginImageDrag(e){
     imageMoveVars.prevX = e.clientX;
     imageMoveVars.prevY = e.clientY;
     imageMoveVars.moveDist = 0;
+    imageMoveVars.prevAngle = 0;
     imageUploadLabel.classList.remove('returnToPosition');
     imageUploadLabel.style.transform = `translate(0px, 0px)`;
-    // imageUploadLabel.setPointerCapture(e.pointerId);
 
     // Determine length from clicked point to center of image to use for rotation calculation
     const rect = image.getBoundingClientRect();
@@ -227,13 +228,21 @@ function beginImageDrag(e){
     let dist = 0;
     dist += distX < 0 ? distX * -1 : distX;
     dist += distY < 0 ? distY * -1 : distY;
+    //Calculate max distance by calculating the hypotenuse to the top left corner of the image
+    let maxDistX = centerX - rect.left;
+    let maxDistY = centerY - rect.top;
+    maxDistX *= maxDistX;
+    maxDistY *= maxDistY;
+    const maxDist = Math.sqrt(maxDistX + maxDistY);
 
     // Set grab distance from center of the image
     imageMoveVars.distFromCenter = Math.sqrt(dist);
 
+    // Set max distance pointer can be from center
+    imageMoveVars.rotationSpeed = (1 - (imageMoveVars.distFromCenter / maxDist)) * 0.05;
+    
     // Set starting angle
     imageMoveVars.startingAngle = radians * (180 / Math.PI);
-    imageMoveVars.prevAngle = imageMoveVars.startingAngle;
 
     // Set pivot point
     imageUploadLabel.style.transformOrigin = `${e.clientX - rect.left}px ${e.clientY - rect.top}px`;
@@ -264,7 +273,7 @@ function dragImage(e){
         degrees -= degrees > 180 ? 360 : 0;
         let difference = degrees - imageMoveVars.prevAngle;
         difference = ((difference + 180) % 360 + 360) % 360 - 180;
-        let newAngle = difference * 0.01 + imageMoveVars.prevAngle;
+        let newAngle = difference * imageMoveVars.rotationSpeed + imageMoveVars.prevAngle;
         newAngle -= newAngle > 180 ? 360 : 0;
         newAngle += newAngle < -180 ? 360 : 0;
         // Apply movement and rotation
