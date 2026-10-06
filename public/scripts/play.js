@@ -24,6 +24,8 @@ const restartButton = new Button(onRestart, "Restart");
 // A list of indeces for images that have recently been used
 const usedImages = [];
 
+const imageMoveVars = {};
+
 // Functions
 // Initial set up for the page, required before using anything on it
 async function setUpPlay(){
@@ -46,6 +48,10 @@ async function setUpPlay(){
         message.textContent = "Must have at least 4 images to play";
         document.querySelector('.InputLocation').appendChild(message);
     }
+
+    // These are to be used with image movement functions
+    document.addEventListener('pointermove', dragImage);
+    document.addEventListener('pointerup', stopImageDrag);
 }
 
 // Cycles through list of images
@@ -64,6 +70,9 @@ function generateNextImage(){
     let playImage = document.createElement('img');
     playImage.src = playImages[index].src;
     playImage.alt = playImages[index].alt;
+
+    // Set movement functions
+    setImageMoveFunctions(playImage);
     
     return playImage;
 }
@@ -201,6 +210,8 @@ function tryFormEntry(){
 function correctChoiceChosen(){
     disableInputs(true);
     randomizeDepartAnimationVariables();
+    image.classList.remove('returnToPosition');
+    void image.offsetHeight;
     image.classList.add('depart');
     nextImageTimeout = setTimeout(function(){
         generateAndSetNextImage();
@@ -313,6 +324,112 @@ function chooseUnusedImageIndex(usedImgs){
     }
 
     return index;
+}
+
+// Image move functions
+function setImageMoveFunctions(playImage){
+    // Set initial variables for moving the image on the screen
+    imageMoveVars.moving = false;
+    imageMoveVars.pointerX = 0;
+    imageMoveVars.pointerY = 0;
+    imageMoveVars.prevX = 0;
+    imageMoveVars.prevY = 0;
+    imageMoveVars.moveDist = 0;
+    imageMoveVars.distFromCenter = 0;
+    imageMoveVars.startingAngle = 0;
+    imageMoveVars.prevAngle = 0;
+    imageMoveVars.rotationSpeed = 0;
+
+    // Set the image drag move functions
+    playImage.addEventListener('pointerdown', beginImageDrag);
+}
+
+function beginImageDrag(e){
+    // Set and reset initial values
+    image.classList.remove('arrive');
+    imageMoveVars.moving = true;
+    imageMoveVars.pointerX = e.clientX;
+    imageMoveVars.pointerY = e.clientY;
+    imageMoveVars.prevX = e.clientX;
+    imageMoveVars.prevY = e.clientY;
+    imageMoveVars.moveDist = 0;
+    imageMoveVars.prevAngle = 0;
+    image.classList.remove('returnToPosition');
+    image.style.transform = `translate(0px, 0px)`;
+
+    // Determine length from clicked point to center of image to use for rotation calculation
+    const rect = image.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    // Calculate the hypotenuse between selected point and center of image
+    let distX = e.clientX - centerX;
+    let distY = e.clientY - centerY;
+    const radians = Math.atan2(distY, distX);  // Find the radians for the initial angle
+    distX *= distX;
+    distY *= distY;
+    let dist = 0;
+    dist += distX < 0 ? distX * -1 : distX;
+    dist += distY < 0 ? distY * -1 : distY;
+    //Calculate max distance by calculating the hypotenuse to the top left corner of the image
+    let maxDistX = centerX - rect.left;
+    let maxDistY = centerY - rect.top;
+    maxDistX *= maxDistX;
+    maxDistY *= maxDistY;
+    const maxDist = Math.sqrt(maxDistX + maxDistY);
+
+    // Set grab distance from center of the image
+    imageMoveVars.distFromCenter = Math.sqrt(dist);
+
+    // Set max distance pointer can be from center
+    imageMoveVars.rotationSpeed = (1 - (imageMoveVars.distFromCenter / maxDist)) * 0.09;
+    
+    // Set starting angle
+    imageMoveVars.startingAngle = radians * (180 / Math.PI);
+
+    // Set pivot point
+    image.style.transformOrigin = `${e.clientX - rect.left}px ${e.clientY - rect.top}px`;
+}
+
+function dragImage(e){
+    if (imageMoveVars.moving && image){
+        // Pivot point location calculation
+        const xMove = e.clientX - imageMoveVars.pointerX;
+        const yMove = e.clientY - imageMoveVars.pointerY;
+
+        // Save total distance moved
+        const deltaX = imageMoveVars.prevX - e.clientX;
+        const deltaY = imageMoveVars.prevY - e.clientY;
+        imageMoveVars.moveDist += deltaX < 0 ? deltaX * -1 : deltaX;
+        imageMoveVars.moveDist += deltaY < 0 ? deltaY * -1 : deltaY;
+
+        // Math to determine rotation
+        const radians = Math.atan2(deltaY, deltaX);
+        let degrees = radians * (180 / Math.PI);
+        degrees = degrees - imageMoveVars.startingAngle + 180;
+        degrees -= degrees > 360 ? 360 : 0;
+        degrees -= degrees > 180 ? 360 : 0;
+        let difference = degrees - imageMoveVars.prevAngle;
+        difference = ((difference + 180) % 360 + 360) % 360 - 180;
+        let newAngle = difference * imageMoveVars.rotationSpeed + imageMoveVars.prevAngle;
+        newAngle -= newAngle > 180 ? 360 : 0;
+        newAngle += newAngle < -180 ? 360 : 0;
+        // Apply movement and rotation
+        image.style.transform = `translate(${xMove}px, ${yMove}px) rotate(${newAngle}deg)`;
+
+        // Update positional variables
+        imageMoveVars.prevX = e.clientX;
+        imageMoveVars.prevY = e.clientY;
+        imageMoveVars.prevAngle = newAngle;
+    }
+}
+
+function stopImageDrag(e){
+    if (image){
+        if (!image.classList.contains('arrive')){
+            imageMoveVars.moving = false;
+            image.classList.add('returnToPosition');
+        }
+    }
 }
 
 // Run the initialization to enable use of this page

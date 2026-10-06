@@ -239,7 +239,7 @@ function beginImageDrag(e){
     imageMoveVars.distFromCenter = Math.sqrt(dist);
 
     // Set max distance pointer can be from center
-    imageMoveVars.rotationSpeed = (1 - (imageMoveVars.distFromCenter / maxDist)) * 0.05;
+    imageMoveVars.rotationSpeed = (1 - (imageMoveVars.distFromCenter / maxDist)) * 0.09;
     
     // Set starting angle
     imageMoveVars.startingAngle = radians * (180 / Math.PI);

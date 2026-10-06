@@ -97,6 +97,7 @@ a{
     object-fit: cover;
     -webkit-user-drag: none;
     z-index: 10;
+    pointer-events: auto;
 }
 
 label{
@@ -271,8 +272,18 @@ p{
     --posY: 0;
 }
 
-img.arrive{
+.ImageLocation img.arrive{
     animation: arrive 0.5s linear;
+}
+
+.ImageLocation img.returnToPosition{
+    animation: returnToPosition 0.5s cubic-bezier(0.1, 1, 1, 1);
+    animation-fill-mode: forwards;
+}
+
+.ImageLocation img.depart{
+    animation: depart 0.5s ease-out;
+    animation-fill-mode: forwards;
 }
 
 @keyframes arrive{
@@ -282,11 +293,6 @@ img.arrive{
     100% { opacity: 100%;
         transform: translateX(0);
     }
-}
-
-img.depart{
-    animation: depart 0.5s ease-out;
-    animation-fill-mode: forwards;
 }
 
 @keyframes depart{
