@@ -98,6 +98,7 @@ a{
     -webkit-user-drag: none;
     z-index: 10;
     pointer-events: auto;
+    touch-action: none;
 }
 
 label{
