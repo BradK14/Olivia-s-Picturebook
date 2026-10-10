@@ -22,6 +22,10 @@ function createAlbumPhoto(playImage){
     image.src = playImage.src;
     image.alt = playImage.alt;
 
+    // Give the image a random rotation
+    const randomRotation = Math.floor(Math.random() * 51) - 25;
+    image.style.transform = `rotate(${randomRotation}deg)`;
+
     // Create a link to house the image
     const link = document.createElement('a');
     link.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
@@ -49,6 +53,10 @@ function createUploadAlbumPhoto(){
     image.src = '/images/Upload.png';
     image.alt = 'Upload';
 
+    // Give the image a random rotation
+    const randomRotation = Math.floor(Math.random() * 51) - 25;
+    image.style.transform = `rotate(${randomRotation}deg)`;
+
     // Create a link to house the image
     const link = document.createElement('a');
     link.href = "/Olivia's_Picturebook/upload";
@@ -75,6 +83,10 @@ function createDownloadAlbumPhoto(){
     const image = document.createElement('img');
     image.src = '/images/Upload.png';
     image.alt = 'Download';
+
+    // Give the image a random rotation
+    const randomRotation = Math.floor(Math.random() * 51) - 25;
+    image.style.transform = `rotate(${randomRotation}deg)`;
 
     // Create a button to house the image
     const button = new Button(async () => {
