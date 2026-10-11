@@ -159,6 +159,8 @@ label.returnToPosition{
 
 .AlbumPhoto{
     padding: 0.5em;
+    white-space: normal;
+    width: 20vw;
     text-align: center;
     font-size: 3vw;
 }
@@ -167,6 +169,11 @@ label.returnToPosition{
     border: 0.6vw solid rgb(191, 191, 255);
     width: 20vw;
     height: 20vw;
+}
+
+.AlbumPhoto p{
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .InputLocation{
@@ -420,6 +427,7 @@ p.backgroundImgText{
 
     .AlbumPhoto{
         font-size: 1.5vw;
+        width: 12vw;
     }
 
     .AlbumPhoto img{
