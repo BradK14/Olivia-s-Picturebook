@@ -118,6 +118,7 @@ function startGame(e){
     if (difficulty === 'Hard') {
         inputButtons.push(document.createElement('input'));
         inputButtons[0].spellcheck = 'false';
+        inputButtons[0].maxLength = 20;
         inputButtons.push(new Button(tryFormEntry, "GO"));
         inputButtons[1].button.setAttribute('id', 'Correct');
         document.getElementById("ChoiceOne").appendChild(inputButtons[0]);
