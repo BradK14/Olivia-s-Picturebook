@@ -74,6 +74,19 @@ a{
     flex-direction: column;
 }
 
+#albumDeleteButtonLocation1{
+    position: absolute;
+    top: 8vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#albumDeleteButtonLocation2{
+    position: absolute;
+    top: 8vw;
+    right: 8vw;
+}
+
 #PlayBody{
     position: relative;
     top: 20vh;
@@ -193,6 +206,11 @@ button{
     transition: color 0.25s ease-out;
 
     --color: rgb(191, 191, 255);
+}
+
+#albumDeleteButton1, #albumDeleteButton2{
+    width: 21vw;
+    height: 6vw;
 }
 
 .hovering{
@@ -407,6 +425,22 @@ p.backgroundImgText{
         left: 4vw;
     }
 
+    #albumDeleteButtonLocation1{
+        position: fixed;
+        bottom: 10vw;
+        right: 4vw;
+        top: auto;
+        left: auto;
+        transform: translateX(0);
+    }
+
+    #albumDeleteButtonLocation2{
+        position: fixed;
+        bottom: 4vw;
+        right: 4vw;
+        top: auto;
+    }
+
     #PlayBody{
         position: static;
     }
@@ -446,6 +480,11 @@ p.backgroundImgText{
         height: 4.5vw;
         font-size: 3vw;
         border: 0.15vw solid rgb(191, 191, 255);
+    }
+
+    #albumDeleteButton1, #albumDeleteButton2{
+        width: 11vw;
+        height: 4vw;
     }
 
     button:disabled#Correct{
