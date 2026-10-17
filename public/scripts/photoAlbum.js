@@ -41,18 +41,13 @@ function createAlbumPhoto(playImage){
 
         // Set up button and attach the image to it
         button = new Button(() => {
-            window.location.href = "/Olivia's_Picturebook/upload";
+            if (!deleteModeToggle){
+                window.location.href = "/Olivia's_Picturebook/upload";
+            }
         });
-
-        // const link = document.createElement('a');
-        // link.href = "/Olivia's_Picturebook/upload";
-        // link.appendChild(image);
 
         // Set the paragraph's text with the name of the image
         p.textContent = image.alt;
-
-        // TODO: Move this below the if else statement when a button is used for all three
-        // div.appendChild(link);
     }
     else if (playImage === 'Download'){
         // Set up image
@@ -61,21 +56,19 @@ function createAlbumPhoto(playImage){
 
         // Set up button and attach the image to it
         button = new Button(async () => {
-            const response = await fetch("/Olivia's_Picturebook/save");
+            if (!deleteModeToggle){
+                const response = await fetch("/Olivia's_Picturebook/save");
             const { playImages: pi } = await response.json();
             pi.forEach((e) => {
                 playImages.push(e);
             });
             localStorage.setItem('playImages', JSON.stringify(playImages));
             fillPhotoAlbumWithPlayImages();
+            }
         });
-        // button.button.appendChild(image);
 
         // Set the paragraph's text with the name of the image
         p.textContent = 'Download Default Images';
-
-        // TODO: Move this below the if else statement when a button is used for all three
-        // div.appendChild(button.button);
     }
     else {  // An actual play image
         // Set up image
@@ -84,18 +77,23 @@ function createAlbumPhoto(playImage){
 
         // Set up button and attach the image to it
         button = new Button(() => {
-            window.location.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
+            if (!deleteModeToggle){
+                window.location.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
+            }
+            else {
+                if (!playImage.deleteThis){
+                    playImage.deleteThis = true;
+                    image.src = '/images/Red_X.png'
+                }
+                else {
+                    playImage.deleteThis = false;
+                    image.src = playImage.src;
+                }
+            }
         });
-
-        // const link = document.createElement('a');
-        // link.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
-        // link.appendChild(image);
 
         // Set the paragraph's text with the name of the image
         p.textContent = image.alt;
-
-        // TODO: Move this below the if else statement when a button is used for all three
-        // div.appendChild(link);
     }
 
     // Apply the button
@@ -126,27 +124,21 @@ function fillPhotoAlbumWithPlayImages(){
     });
 
     // Put a link to an upload page at the end of the album
-    // photoAlbumLocation.appendChild(createUploadAlbumPhoto());
     photoAlbumLocation.appendChild(createAlbumPhoto('Upload'));
 
     // If there are no images, offer a download default images button
     if (playImages.length <= 0){
-        // photoAlbumLocation.appendChild(createDownloadAlbumPhoto());
         photoAlbumLocation.appendChild(createAlbumPhoto('Download'));
     }
 }
 
 function toggleDeleteMode(){
     if (!deleteModeToggle){
-        // TODO: Make images selectable
-
         // Reveal second delete button and make original delete button a cancel button
         deleteButton1.button.textContent = 'Cancel';
         deleteButton2.button.hidden = false;
     }
     else {
-        // TODO: Clear the selectable state of the images
-
         // Reset the buttons to their original state
         deleteButton1.button.textContent = 'Delete';
         deleteButton2.button.hidden = true;
@@ -156,7 +148,11 @@ function toggleDeleteMode(){
 }
 
 function deleteSelectedImages(){
-    // TODO: Implement deletion effect
+    // Delete selected images
+    playImages = playImages.filter(playImage => !playImage.deleteThis);
+
+    // Sync playImages state in the local storage
+    localStorage.setItem('playImages', JSON.stringify(playImages));
 
     // Toggle when done, and reset the album
     toggleDeleteMode();
