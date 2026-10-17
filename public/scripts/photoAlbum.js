@@ -27,6 +27,9 @@ function createAlbumPhoto(playImage){
     // Create the image
     const image = document.createElement('img');
 
+    // Create the button for the image
+    let button;
+
     // Create the paragraph to give the image's name
     const p = document.createElement('p');
 
@@ -37,15 +40,19 @@ function createAlbumPhoto(playImage){
         image.alt = 'Upload';
 
         // Set up button and attach the image to it
-        const link = document.createElement('a');
-        link.href = "/Olivia's_Picturebook/upload";
-        link.appendChild(image);
+        button = new Button(() => {
+            window.location.href = "/Olivia's_Picturebook/upload";
+        });
+
+        // const link = document.createElement('a');
+        // link.href = "/Olivia's_Picturebook/upload";
+        // link.appendChild(image);
 
         // Set the paragraph's text with the name of the image
         p.textContent = image.alt;
 
         // TODO: Move this below the if else statement when a button is used for all three
-        div.appendChild(link);
+        // div.appendChild(link);
     }
     else if (playImage === 'Download'){
         // Set up image
@@ -53,7 +60,7 @@ function createAlbumPhoto(playImage){
         image.alt = 'Download';
 
         // Set up button and attach the image to it
-        const button = new Button(async () => {
+        button = new Button(async () => {
             const response = await fetch("/Olivia's_Picturebook/save");
             const { playImages: pi } = await response.json();
             pi.forEach((e) => {
@@ -62,13 +69,13 @@ function createAlbumPhoto(playImage){
             localStorage.setItem('playImages', JSON.stringify(playImages));
             fillPhotoAlbumWithPlayImages();
         });
-        button.button.appendChild(image);
+        // button.button.appendChild(image);
 
         // Set the paragraph's text with the name of the image
         p.textContent = 'Download Default Images';
 
         // TODO: Move this below the if else statement when a button is used for all three
-        div.appendChild(button.button);
+        // div.appendChild(button.button);
     }
     else {  // An actual play image
         // Set up image
@@ -76,16 +83,24 @@ function createAlbumPhoto(playImage){
         image.alt = playImage.alt;
 
         // Set up button and attach the image to it
-        const link = document.createElement('a');
-        link.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
-        link.appendChild(image);
+        button = new Button(() => {
+            window.location.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
+        });
+
+        // const link = document.createElement('a');
+        // link.href = `/Olivia's_Picturebook/upload?playImage=${image.alt}`;
+        // link.appendChild(image);
 
         // Set the paragraph's text with the name of the image
         p.textContent = image.alt;
 
         // TODO: Move this below the if else statement when a button is used for all three
-        div.appendChild(link);
+        // div.appendChild(link);
     }
+
+    // Apply the button
+    button.button.appendChild(image);
+    div.appendChild(button.button);
     
     // Give the image a random rotation
     const randomRotation = Math.floor(Math.random() * 51) - 25;
